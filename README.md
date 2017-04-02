@@ -1,2 +1,1 @@
-"# tourist app" 
-"# tourist apps" 
+This is a tourist apps for University Malaysia Sabah, Malaysia.
