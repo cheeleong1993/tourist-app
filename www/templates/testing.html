@@ -1,0 +1,67 @@
+<!-- <ion-view view-title='<img class="title-image" src="img/icon.png" style="margin-top: 4px; float:left" />'> -->
+<ion-view view-title='<img class="title-image" src="img/logo.jpg" style="height: 38px; float: left;margin-top: 1px" />'>
+  <ion-nav-buttons side="right">
+      <!-- <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goMap()" ng-class="{'ion-arrow-down-c':!hasFilters,'ion-close-circled':hasFilters}"></a> -->
+      <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goCamera()" ng-class="{'ion-ios-camera':!hasFilters,'ion-close-circled':hasFilters}"></a>
+  </ion-nav-buttons>
+
+  <ion-content class="margin-top-10"> 
+     
+ 
+    <div class="list">
+      <!-- <a href="" class="item">
+        <h4>Featured Views</h4>
+      </a> -->
+
+      <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+        <ion-slide ng-repeat="slide in slides">
+          <img src="{{slide.image}}" class="slide-data-img" alt=""/>
+        </ion-slide>
+      </ion-slide-box>
+ 
+    </div>
+
+    <!-- <div class="row" style="margin-top: 10px"> -->
+    <div class="row">
+      <div class="col">
+        <button class="button button-small button-balanced" ng-click="goMap()" style="float: right; width: 90%; text-align: left; border-radius: 0px;"><i class="icon ion-android-map"></i>&ensp;&ensp;MAP</button>
+      </div>
+      <div class="col">
+        <button class="button button-small button-balanced" ng-click="goAttraction()" style="width: 90%; text-align: left; border-radius: 0px"><i class="icon ion-ios-location"></i>&ensp;&ensp;ATTRACTION</button>
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 15px">
+      <div class="col">
+        <button class="button button-small button-balanced" ng-click="goFacility()" style="float: right; width: 90%; text-align: left; border-radius: 0px; "><i class="icon ion-eye"></i>&ensp;&ensp;FACILITY</button>
+      </div>
+      <div class="col">
+        <button class="button button-small button-balanced" ng-click="goEvic()" style="width: 90%; text-align: left; border-radius: 0px"><i class="icon ion-ios-telephone"></i>&ensp;&ensp;UMS-EVIC</button>
+      </div>
+    </div>
+    <div class="list">
+      <a href="" class="item">
+        <h3>Most Visited</h3>
+      </a>
+
+      <a class="item item-thumbnail-left" ng-click="goSingle($event)" ng-repeat="visit in mostVisited">
+        <img src="{{visit.image}}">
+        <h2>{{visit.name}}</h2>
+        <p>
+          234 ratings<br>
+          <span class="icon ion-ios-star resto-star-color"></span>
+          <span class="icon ion-ios-star resto-star-color"></span>
+          <span class="icon ion-ios-star resto-star-color"></span>
+          <span class="icon ion-ios-star resto-star-color"></span>
+          <span class="icon ion-ios-star"></span>
+        </p>
+        <div class="float-right">
+          <button class="resto-btn resto-btn-primary"><span class="icon ion-eye"></span></button>
+          <button class="resto-btn resto-btn-pink" ng-click="goNavigate($event)"><span class="ion-navigate"></span></button>
+        </div>
+      </a>
+
+    </div>
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,44 @@
+<ion-view view-title='<img class="title-image" src="img/logo.jpg" style="height: 38px; float: left;margin-top: 1px" />'>
+<!-- <ion-view view-title=''> -->
+  <ion-nav-buttons side="right">
+      <!-- <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goMap()" ng-class="{'ion-arrow-down-c':!hasFilters,'ion-close-circled':hasFilters}"></a> -->
+      <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goCamera()" ng-class="{'ion-ios-camera':!hasFilters,'ion-close-circled':hasFilters}"></a>
+  </ion-nav-buttons>
+
+  <ion-content class="margin-top-10"> 
+        
+    <div class=div style="background: url(img/back.jpg); background-size: cover; background-repeat: no-repeat; background-position: center center;  ">
+      <img src="img/logo_transparent.png" class="slide-data-img" alt="" style="margin-top: 10%; height: 20%; width: 50%; margin-left: 25%" />
+
+
+
+      <div class="row" style="height: 25%;">
+        <div class="col">
+          <button class="button button-outline button-light" ng-click="goEvic()" style=" width: 100%; text-align: center; height: 95px; color: white; border-color: white; border-width: 4px"><i class="icon ion-ios-telephone"></i><p><b>EVIC</b></p></button>
+        </div>
+        <div class="col">
+          <button class="button button-outline button-light" ng-click="goFacility()" style=" width: 100%; text-align: center; height: 95px; color: white; border-color: white; border-width: 4px"><i class="icon ion-eye"></i><p><b>FACILITIES</b></p></button>
+        </div>
+      </div>
+
+      <div class="row" style=" height: 25%">
+        <div class="col">
+          <button class="button button-outline button-light" ng-click="goAttraction()" style="width: 100%; text-align: center; height: 95px; color: white; border-color: white; border-width: 4px"><i class="icon ion-ios-location"></i><p><b>ATTRACTION</b></p></button>
+        </div>
+        <div class="col">
+          <button class="button button-outline button-light" ng-click="goMap()" style="width: 100%; text-align: center; height: 95px; color: white; border-color: white; border-width: 4px"><i class="icon ion-android-map"></i><p><b>Map</b></p></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="list" style="height: 25%">
+      <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+        <ion-slide ng-repeat="advertisement in advertisements">
+          <img src="{{advertisement.imageURL}}" class="slide-data-img" alt=""/>
+        </ion-slide>
+      </ion-slide-box>
+ 
+    </div>
+
+  </ion-content>
+</ion-view>

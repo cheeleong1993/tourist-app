@@ -1,0 +1,81 @@
+<ion-view view-title="Contact Us">
+	<ion-nav-buttons side="right">
+      <!-- <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goMap()" ng-class="{'ion-arrow-down-c':!hasFilters,'ion-close-circled':hasFilters}"></a> -->
+      <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goCamera()" ng-class="{'ion-ios-camera':!hasFilters,'ion-close-circled':hasFilters}"></a>
+    </ion-nav-buttons>
+
+  	<ion-content class="margin-top-10"> 
+        <div id="map" data-tap-disabled="true" style="height: 30%"></div>
+
+        <div class="row responsive-sm">
+	        <div class="row">
+		      <div class="col" >
+		        <a ng-click="goEvic()">
+		          <img src="img/evic.jpg" class="slide-data-img" alt="" style="height: 80px" />
+		        </a>
+		      </div>
+
+		      <div class="col" >
+		        <a ng-click="goEvic()">
+		          <p style="text-align: center;">EcoCampus Visitor Information Centre (EVIC)</p>
+		        </a>
+		      </div>
+
+		      <div class="col" >
+		        <a ng-click="goEvic()">
+		          <button class="button icon ion-ios-location" style="margin: 15px; float: right;"></button>
+		        </a>
+		      </div>
+		    </div>
+	    </div>
+
+	<div class="list">
+      
+
+      <div class="item item-thumbnail">
+        <h2><b>Find Us on Social Media</b></h2>
+        <div class="row">
+        	<div class="col">
+        		<img src="img/facebook.png" class="slide-data-img" alt="" style="height: 70px" />
+        	</div>
+        	<div class="col">
+	          <img src="img/instagram.png" class="slide-data-img" alt="" style="height: 70px" />
+	        </div> 
+	        <div class="col">
+	          <img src="img/twitter.png" class="slide-data-img" alt="" style="height: 70px" />
+	        </div>
+	        <div class="col">
+	          <img src="img/youtube.jpg" class="slide-data-img" alt="" style="height: 70px" />
+	        </div>
+        </div>
+      </div>
+
+      <div class="item item-thumbnail">
+	      <div class="row">
+	        	<div class="col">
+	        		<h2><b>Contact</b></h2>
+	        		<p>+60 88-320 000</p>
+	        	</div>
+	        	<div class="col">
+	        		<button class="button icon ion-android-call" style="float: right;"></button>
+	        	</div>
+	       </div>       
+      </div>
+
+      <div class="item item-thumbnail">
+	      <div class="row">
+	        	<div class="col">
+	        		<h2><b>Email</b></h2>
+	        		<p>ecocampus@ums.edu.my</p>
+	        	</div>
+	        	<div class="col">
+	        		<button class="button icon ion-email" style="float: right;"></button> 	
+	        	</div>
+	       </div>       
+      </div>
+
+
+
+    </div>
+   </ion-content>
+</ion-view> 

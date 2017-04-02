@@ -1,0 +1,32 @@
+<ion-view view-title="EVIC">
+  <ion-nav-buttons side="right"> 
+      <!-- <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goMap()" ng-class="{'ion-arrow-down-c':!hasFilters,'ion-close-circled':hasFilters}"></a> -->
+      <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goCamera()" ng-class="{'ion-ios-camera':!hasFilters,'ion-close-circled':hasFilters}"></a>
+  </ion-nav-buttons> 
+  
+  <ion-content class="margin-top-10" style="margin-top: 10px">
+    <div class="row responsive-sm">
+      <div class="col">
+        <img src="img/evic.jpg" class="slide-data-img" alt=""/>
+        
+            <p>The UMS-EVIC is a one-stop centre for UMS EcoCampus Tourism to house an information counter for centralised ticketing system and payment, briefing hall for the visitors, tourism packages, souvenir shop and a refreshment outlet.</p>
+
+            <P>Opening Hours:</P>
+            <P>Monday to Thursday (09.00 am - 12.00 pm and 01.00 pm - 04.00 pm)</P>
+            <P>Friday (09.00 am - 12.00 pm & 02.00 pm - 04.00 pm)</P>   
+
+            <P>Contact: +6088 320 000 EXT. 5156/5152     
+            </p>
+      </div>
+    </div>
+  </ion-content>
+
+  <ion-footer-bar align-title="left" class="bar-light">
+    <div class="col" style="padding-top: 0">
+      <button class="button button-small button-balanced" ng-click="showActivities()" style="width: 85%; text-align: left; border-radius: 20px;margin-left: 10%"><i class="icon ion-android-bicycle"></i>&ensp;&ensp;Activities</button>
+    </div>
+    <div class="col" style="padding-top: 0">
+      <button class="button button-small button-balanced" ng-click="goEvicMap()" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;"><i class="icon ion-android-map"></i>&ensp;&ensp;Map</button>
+    </div>
+  </ion-footer-bar>
+</ion-view>

@@ -1,0 +1,36 @@
+<!-- <ion-view view-title="Take A Photo">
+  <ion-content class="margin-top-10" ng-controller="ExampleController" padding="true"> 
+        <button class="button button-full button-assertive" ng-click="takePhoto()">Take Photo</button>
+		<button class="button button-full button-assertive" ng-click="choosePhoto()">Choose Photo</button>
+		<img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
+    </ion-content>
+</ion-view>  -->
+
+<!-- <ion-view view-title="Take A Photo">
+	<ion-content class="margin-top-10" padding="true">
+	  <button class="button button-energized" ng-click="addImage()">
+		  Add image
+	  </button><br>
+	  <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
+	 </ion-content>
+</ion-view>  -->
+
+<ion-view view-title="Take A Photo">
+	<ion-content ng-controller="overlayController">
+	      <div class="row">
+	        <img ng-src="{{image}}" style="width: 100%">
+	      </div>
+	      <div class="list">
+	          <label class="item item-input">
+	              <input type="text" ng-model="textOverlay" placeholder="Text to overlay">
+	          </label>
+	      </div>
+	      <div class="row">
+	          <button ng-click="createOverlay()" class="button button-full button-positive">
+	              Overlay
+	          </button>
+	      </div>
+
+	</ion-content>
+	<canvas id="tempCanvas"></canvas>
+</ion-view> 

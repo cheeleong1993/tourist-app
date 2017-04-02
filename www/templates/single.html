@@ -1,0 +1,38 @@
+<ion-view view-title="Attraction">
+  <ion-nav-buttons side="right"> 
+      <!-- <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goMap()" ng-class="{'ion-arrow-down-c':!hasFilters,'ion-close-circled':hasFilters}"></a> -->
+      <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goCamera()" ng-class="{'ion-ios-camera':!hasFilters,'ion-close-circled':hasFilters}"></a>
+  </ion-nav-buttons>
+  
+  <ion-content class="margin-top-10" style="margin-top: 10px">
+    <div class="row responsive-sm"> 
+      <div class="col">
+        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="slide in slides"> -->
+            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
+          <!-- </ion-slide>
+        </ion-slide-box> -->
+
+            <h4 style="color: #005803">{{title}}</h4><h3></h3>
+            <p>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star"></span>
+              <span> 85 ratings </span>
+            </p><br>
+        
+            <p style="text-align: justify;">{{description}}</p>
+      </div>
+    </div>
+  </ion-content>
+  <ion-footer-bar align-title="left" class="bar-light">
+    <div class="col" style="padding-top: 0">
+      <button class="button button-small button-balanced" ng-click="" style="width: 85%; text-align: left; border-radius: 20px;margin-left: 10%">&ensp;&ensp;<i class="icon ion-image"></i>&ensp;&ensp;Gallery</button>
+    </div>
+    <div class="col" style="padding-top: 0">
+      <button class="button button-small button-balanced" ng-click="viewMap(attraction.id)" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;">&ensp;&ensp;<i class="icon ion-android-map"></i>&ensp;&ensp;Map</button>
+    </div>
+  </ion-footer-bar>
+</ion-view>
