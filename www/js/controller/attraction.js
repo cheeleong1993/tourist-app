@@ -1,5 +1,5 @@
 /**
- * Created by Gabeta on 24/07/2016.
+ * Created by Gabeta on 24/07/2016. 
  */ 
 app.controller('attractionCtrl',function($scope, $state, $cordovaCamera, $firebase, $ionicFilterBar, getData){
 
@@ -14,13 +14,15 @@ app.controller('attractionCtrl',function($scope, $state, $cordovaCamera, $fireba
 	    });
 	}
 
-  $scope.goMap = function(){
-	$state.go('map');
-	}
-
-  $scope.goAttraction = function(){
-	$state.go('attraction');
-	}
+	$scope.searchAttraction = function () {
+	    var filterBarInstance = $ionicFilterBar.show({
+	      cancelText: "<i class='ion-ios-close-outline'></i>",
+	      items: $scope.attractions,
+	      update: function (filteredItems, filterText) {
+	        $scope.attractions = filteredItems;
+	      }
+	    });
+	  };
 
 	$scope.goCamera = function () {
       var options = {
@@ -42,12 +44,22 @@ app.controller('attractionCtrl',function($scope, $state, $cordovaCamera, $fireba
       
         });
     }
+    
+ //  $scope.goMap = function(){
+	// $state.go('map');
+	// }
 
-  $scope.goSingle = function(){
+ //  $scope.goAttraction = function(){
+	// $state.go('attraction');
+	// }
 
-	$state.go('single');
+	
 
-	}
+ //  $scope.goSingle = function(){
+
+	// $state.go('single');
+
+	// }
 
 	// $scope.attractions = [ 
 	//      {
@@ -77,28 +89,19 @@ app.controller('attractionCtrl',function($scope, $state, $cordovaCamera, $fireba
 	//      }
 	//   ];
 
-	$scope.mostVisited = [
-	     {
-	        "image":"img/museum.jpg",
-	        "name":"Laman Rasmi UMS"
-	     },
-	     {
-	        "image":"img/odec.jpg",
-	        "name":"Pantai ODEC UMS"
-	     },
-	     {
-	        "image":"img/library.jpg",
-	        "name":"UMS Libraryy"
-	     }
-	  ];
+	// $scope.mostVisited = [
+	//      {
+	//         "image":"img/museum.jpg",
+	//         "name":"Laman Rasmi UMS"
+	//      },
+	//      {
+	//         "image":"img/odec.jpg",
+	//         "name":"Pantai ODEC UMS"
+	//      },
+	//      {
+	//         "image":"img/library.jpg",
+	//         "name":"UMS Libraryy"
+	//      }
+	//   ];
 
-	$scope.searchAttraction = function () {
-    var filterBarInstance = $ionicFilterBar.show({
-      cancelText: "<i class='ion-ios-close-outline'></i>",
-      items: $scope.attractions,
-      update: function (filteredItems, filterText) {
-        $scope.attractions = filteredItems;
-      }
-    });
-  };
 })

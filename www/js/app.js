@@ -66,7 +66,6 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
     })
 
     $stateProvider.state('single', {
-      // url:'/menu/:id',
       url:'/attraction/:attraction_id',
       templateUrl:'templates/single.html',
       controller: 'singleCtrl'
@@ -140,99 +139,99 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
 
 .controller("ExampleController", function ($scope, $cordovaCamera, $cordovaFile, $timeout, $cordovaGeolocation) {
  
-                $scope.takePhoto = function () {
-                  var options = {
-                    quality: 75,
-                    destinationType: Camera.DestinationType.DATA_URL,
-                    sourceType: Camera.PictureSourceType.CAMERA,
-                    allowEdit: false,
-                    encodingType: Camera.EncodingType.JPEG,
-                    targetWidth: 300,
-                    targetHeight: 300,
-                    popoverOptions: CameraPopoverOptions,
-                    saveToPhotoAlbum: true
-                  };
-   
-                  $cordovaCamera.getPicture(options).then(function (imageData, sourcePath) {
-                      $scope.imgURI = "data:image/jpeg;base64," + imageData;
-                      // var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
-                      // var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
+      $scope.takePhoto = function () {
+        var options = {
+          quality: 75,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          allowEdit: false,
+          encodingType: Camera.EncodingType.JPEG,
+          targetWidth: 300,
+          targetHeight: 300,
+          popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: true
+        };
 
-                      // $cordovaFile.copyFile(sourceDirectory, sourceFileName, cordova.file.dataDirectory, sourceFileName).then(function(success) {
-                      //    $scope.fileName = cordova.file.dataDirectory + sourceFileName;
-                      // }, function(error) {
-                      //    console.dir(error);
-                      // });     
-                  }, function (err) {
-                      // An error occured. Show a message to the user
-                  });
-                }
-                
-                var startimg="img/evic.jpg";
-                $scope.image=startimg;
+        $cordovaCamera.getPicture(options).then(function (imageData, sourcePath) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            // var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
+            // var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
 
-                var options = {timeout: 10000, enableHighAccuracy: true};
-                $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-                  var lat  = position.coords.latitude;
-                  var long = position.coords.longitude;
+            // $cordovaFile.copyFile(sourceDirectory, sourceFileName, cordova.file.dataDirectory, sourceFileName).then(function(success) {
+            //    $scope.fileName = cordova.file.dataDirectory + sourceFileName;
+            // }, function(error) {
+            //    console.dir(error);
+            // });     
+        }, function (err) {
+            // An error occured. Show a message to the user
+        });
+      }
+      
+      var startimg="img/evic.jpg";
+      $scope.image=startimg;
 
-                  var geocoder = new google.maps.Geocoder();
-                  var latlng = new google.maps.LatLng(lat, long);
-                  var request = {
-                    latLng: latlng
-                  };
-                  geocoder.geocode(request, function(data, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                      if (data[0] != null) {
-                        console.log(data);
-                        $scope.textOverlay=data[0].formatted_address;
-                      } else {
-                        console.log("No address available");
-                      }
-                    }
-                  })
-                  
-                  console.log(lat,long);
-                });
-                
-         
-                var canvas = document.createElement('canvas');
-                var context = canvas.getContext('2d');
+      var options = {timeout: 10000, enableHighAccuracy: true};
+      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+        var lat  = position.coords.latitude;
+        var long = position.coords.longitude;
 
-                $scope.createOverlay= function(){
-         
-                  var source =  new Image();
-                  source.src = startimg;
-                  canvas.width = source.width;
-                  canvas.height = source.height;
-         
-                  console.log(canvas);
-         
-                  context.drawImage(source,0,0);
-         
-                  context.font = "10px impact";
-                  textWidth = context.measureText($scope.frase).width;
-         
-                  if (textWidth > canvas.offsetWidth) {
-                      context.font = "20px impact";
-                  }
+        var geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(lat, long);
+        var request = {
+          latLng: latlng
+        };
+        geocoder.geocode(request, function(data, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (data[0] != null) {
+              console.log(data);
+              $scope.textOverlay=data[0].formatted_address;
+            } else {
+              console.log("No address available");
+            }
+          }
+        })
+        
+        console.log(lat,long);
+      });
+      
 
-                  context.textAlign = 'center';
-                  context.fillStyle = 'white';
-         
-                  context.fillText($scope.textOverlay,canvas.width/2,canvas.height*0.9);
-         
-                  var imgURI = canvas.toDataURL();
-                
-                  $timeout( function(){
-                      $scope.image = imgURI;
-                  }, 200);
+      var canvas = document.createElement('canvas');
+      var context = canvas.getContext('2d');
 
-                  //remove the extra image(tempCanvas)
-                  var articleRow = document.querySelector('#tempCanvas');
-                  articleRow.remove();
-                }
-            });
+      $scope.createOverlay= function(){
+
+        var source =  new Image();
+        source.src = startimg;
+        canvas.width = source.width;
+        canvas.height = source.height;
+
+        console.log(canvas);
+
+        context.drawImage(source,0,0);
+
+        context.font = "10px impact";
+        textWidth = context.measureText($scope.frase).width;
+
+        if (textWidth > canvas.offsetWidth) {
+            context.font = "20px impact";
+        }
+
+        context.textAlign = 'center';
+        context.fillStyle = 'white';
+
+        context.fillText($scope.textOverlay,canvas.width/2,canvas.height*0.9);
+
+        var imgURI = canvas.toDataURL();
+      
+        $timeout( function(){
+            $scope.image = imgURI;
+        }, 200);
+
+        //remove the extra image(tempCanvas)
+        var articleRow = document.querySelector('#tempCanvas');
+        articleRow.remove();
+      }
+  });
 
 
 // app.controller('overlayController',function($scope, $timeout){

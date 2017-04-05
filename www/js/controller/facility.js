@@ -5,7 +5,7 @@ app.controller('facilityCtrl',function($scope, $state, $cordovaCamera){
 
   	$scope.sideMenu = true;
 
-  	$scope.goAttraction = function(){
+  	$scope.goAttraction = function(){ 
 		$state.go('attraction');
 		}
 
@@ -264,10 +264,10 @@ app.controller('toiletMapCtrl', function($scope, $state, $cordovaGeolocation, $c
           createMarker(cities[i]);
       }
 
-      google.maps.event.addDomListener(marker, 'click', function () {
-          infoWindow.open($scope.map, marker);
+    //   google.maps.event.addDomListener(marker, 'click', function () {
+    //       infoWindow.open($scope.map, marker);
         
-    });
+    // });
     }, function(error){
       console.log("Could not get location");
     });

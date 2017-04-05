@@ -1,149 +1,85 @@
 app.controller('mapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera, $cordovaLaunchNavigator, $compile, getData) { 
 
     var options = {timeout: 10000, enableHighAccuracy: true};
- 
-    var attractions = getData.refAttractions();
-    console.log(attractions);
+    var attractions = getData.refAttractions(); 
 
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
    
         var latLng = new google.maps.LatLng(6.032509, 116.121645);
-     
+        var user_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        
         var mapOptions = {
           center: latLng,
           zoom: 14,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
    
-      $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-      $scope.markers = [];
-   
-      // //Wait until the map is loaded
-      // google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-      
-      //   var marker = new google.maps.Marker({
-      //       map: $scope.map,
-      //       animation: google.maps.Animation.DROP,
-      //       position: latLng,
-      //       icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-      //   });      
-     
-      //   var myInfoWindow = new google.maps.InfoWindow({
-      //       content: "Here You Are!"
-      //   });
+        $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-      //   google.maps.event.addListener(marker, 'click', function () {
-
-      //       myInfoWindow.open($scope.map, marker); 
-
-      //   });
-      // });
-
-      var infoWindow = new google.maps.InfoWindow();
-
-      var createMarker = function (info){
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(info.latitude, info.longitude),
+        //create current location marker
+        var user_marker = new google.maps.Marker({
             map: $scope.map,
+            icon: 'img/marker.png',
             animation: google.maps.Animation.DROP,
-            title: info.title,
-        });
-        marker.content = '<div class="infoWindowContent"></div>';
-        google.maps.event.addListener(marker, 'click', function(){
-             //var contentString = $compile('<button ng-click="navigate()">Navigate</button>')($scope);
-             var contentString = '<p>' + marker.title + '</p>';
-            //infoWindow.setContent(contentString[0]);
-            infoWindow.setContent(contentString);
-            infoWindow.open($scope.map, marker);
-            console.log(contentString[0]);
-        });
+            position: user_position
+          });      
+       
+        var myInfoWindow = new google.maps.InfoWindow({
+            content: "Here You Are!"
+          });
 
-        $scope.markers.push(marker);
-      }  
-      $scope.navigate= function(){ 
-        var dest = [6.039858, 116.112751];
-            $cordovaLaunchNavigator.navigate(dest, {
-              start: null,
-              enableDebug: true
-            }).then(function () {
-              alert("Navigator launched");
-            }, function (err) {
-              alert(err);
-            });
-        alert("Navigator launched");
+        google.maps.event.addListener(user_marker, 'click', function () {
+            myInfoWindow.open($scope.map, user_marker);  
+          });
+
+        $scope.markers = [];
+
+        var infoWindow = new google.maps.InfoWindow();
+
+        var createMarker = function (info){
+          var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(info.latitude, info.longitude),
+              map: $scope.map,
+              animation: google.maps.Animation.DROP,
+              title: info.title,
+          });
+          marker.content = '<div class="infoWindowContent"></div>';
+          google.maps.event.addListener(marker, 'click', function(){
+
+              var contentString = "<div><button class='button button-clear button-positive' ng-click='navigate()'>"+marker.title+"</button></div>";
+              var compiled = $compile(contentString)($scope);
+
+              $scope.navigate= function(){ 
+                console.log(marker.position);
+                var dest = [info.latitude, info.longitude];
+                    $cordovaLaunchNavigator.navigate(dest, {
+                      start: null,
+                      enableDebug: true
+                    }).then(function () {
+                      // alert("Navigator launched");
+                    }, function (err) {
+                      alert(err);
+                    });
+                alert("Navigator launched");
+                }
+              infoWindow.setContent(compiled[0]);
+              infoWindow.open($scope.map, marker);
+              console.log(contentString);
+              });
+
+          $scope.markers.push(marker);
+        }        
+
+        for (i = 0; i < attractions.length; i++){
+            createMarker(attractions[i]);          
         }
-      for (i = 0; i < attractions.length; i++){
-          createMarker(attractions[i]);
-      }
 
-      google.maps.event.addDomListener(marker, 'click', function () {
-          infoWindow.open($scope.map, marker);
-        
-    });
-    }, function(error){
-      console.log("Could not get location");
-    });    
 
-  //   var cities = [
-  //     {
-  //         city : 'Aquarium & Marine Museum',
-  //         desc : 'Test',
-  //         lat : 6.039858,
-  //         long : 116.112751 
-  //     },
-  //     {
-  //         city : 'Dewan Canselor UMS',
-  //         desc : 'Test',
-  //         lat : 6.036401,
-  //         long : 116.115639
-  //     },
-  //     {
-  //         city : 'Canselori UMS',
-  //         desc : 'Test',
-  //         lat : 6.034358,
-  //         long : 116.115639 
-  //     },
-  //     {
-  //         city : 'UMS Library',
-  //         desc : 'Test',
-  //         lat : 6.034358,
-  //         long : 116.117660 
-  //     },
-  //     {
-  //         city : 'UMS Peak',
-  //         desc : 'Test',
-  //         lat : 6.042461,
-  //         long : 116.119541 
-  //     },
-  //     {
-  //         city : 'Mosque UMS',
-  //         desc : 'Test',
-  //         lat : 6.038148,
-  //         long : 116.125190 
-  //     },
-  //     {
-  //         city : 'Clock Tower UMS',
-  //         desc : 'Test',
-  //         lat : 6.0325096,
-  //         long : 116.121645 
-  //     },{
-  //         city : 'EcoCampus Visitor Information Centre',
-  //         desc : 'Test',
-  //         lat : 6.032509,
-  //         long : 116.121645 
-  //     },{
-  //         city : 'Kompleks Sukan UMS',
-  //         desc : 'Test',
-  //         lat : 6.042852,
-  //         long : 116.127930
-  //     },
-  //     {
-  //         city : 'UMS ODEC Beach',
-  //         desc : 'Test',
-  //         lat : 6.043048,
-  //         long : 116.111757 
-  //     }
-  // ];
+      }, function(error){
+        console.log("Could not get location");
+      });    
+
+
     $scope.goCamera = function () {
       var options = {
         quality: 75,

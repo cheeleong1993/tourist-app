@@ -1,8 +1,40 @@
-app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocation, $cordovaLaunchNavigator) { 
+app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocation, $cordovaLaunchNavigator, $compile, $ionicPopup, $timeout) { 
 
     var data = getData.get($state.params.attraction_id);
     var options = {timeout: 10000, enableHighAccuracy: true};
 
+    $scope.showPopup = function() {
+   $scope.data = {}
+
+   // An elaborate, custom popup
+   var myPopup = $ionicPopup.show({
+     template: '<input type="password" ng-model="data.wifi">',
+     title: $scope.title,
+     subTitle: 'How much you loved?',
+     scope: $scope,
+     buttons: [
+       { text: 'Cancel' },
+       {
+         text: '<b>Submit</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+           if (!$scope.data.wifi) {
+             //don't allow the user to close unless he enters wifi password
+             e.preventDefault();
+           } else {
+             return $scope.data.wifi;
+           }
+         }
+       },
+     ]
+   });
+   myPopup.then(function(res) {
+     console.log('Tapped!', res);
+   });
+   $timeout(function() {
+      myPopup.close(); //close the popup after 3 seconds for some reason
+   }, 30000);
+  };
     // $scope.slides = [ 
     //    { 
     //       "image":"img/Attraction/chancellery building/chancellery_1.jpg"
@@ -42,7 +74,8 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
    
         var latLng = new google.maps.LatLng(data.latitude, data.longitude);
-     
+        var user_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
         var mapOptions = {
           center: latLng,
           zoom: 14,
@@ -50,6 +83,22 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
         };
    
         $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        //create current location marker
+        var user_marker = new google.maps.Marker({
+            map: $scope.map,
+            icon: 'img/marker.png',
+            animation: google.maps.Animation.DROP,
+            position: user_position
+          });      
+       
+        var myInfoWindow = new google.maps.InfoWindow({
+            content: "Here You Are!"
+          });
+
+        google.maps.event.addListener(user_marker, 'click', function () {
+            myInfoWindow.open($scope.map, user_marker);  
+          });
 
         var infoWindow = new google.maps.InfoWindow();
 
@@ -64,29 +113,31 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
 
           marker.content = '<div class="infoWindowContent"></div>';
           google.maps.event.addListener(marker, 'click', function(){
-               //var contentString = $compile('<button ng-click="navigate()">Navigate</button>')($scope);
-               var contentString = '<p>' + marker.title + '</p>';
-              //infoWindow.setContent(contentString[0]);
-              infoWindow.setContent(contentString);
+
+               var contentString = "<div><button class='button button-clear button-positive' ng-click='navigate()'>"+marker.title+"</button></div>";
+               var compiled = $compile(contentString)($scope);
+
+               $scope.navigate= function(){ 
+                  console.log(marker.position);
+                  var dest = [info.lat, info.long];
+                      $cordovaLaunchNavigator.navigate(dest, {
+                        start: null,
+                        enableDebug: true
+                      }).then(function () {
+                        // alert("Navigator launched");
+                      }, function (err) {
+                        alert(err);
+                      });
+                  alert("Navigator launched");
+                  }
+
+              infoWindow.setContent(compiled[0]);
               infoWindow.open($scope.map, marker);
-              console.log(contentString[0]);
+
           });
 
           //$scope.markers.push(marker);
         }  
-
-        $scope.navigate= function(){ 
-          var dest = [6.039858, 116.112751];
-              $cordovaLaunchNavigator.navigate(dest, {
-                start: null,
-                enableDebug: true
-              }).then(function () {
-                alert("Navigator launched");
-              }, function (err) {
-                alert(err);
-              });
-          alert("Navigator launched");
-          }
 
         for (i = 0; i < cities.length; i++){
             createMarker(cities[i]);

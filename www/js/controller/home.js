@@ -7,7 +7,7 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
 ;
 	$scope.advertisements = getData.refAdvertisements();
 
-	$scope.sideMenu = true;
+	$scope.sideMenu = true; 
 
 	$scope.goMap = function(){
 		$state.go('map');
@@ -22,81 +22,9 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
 		$state.go('facility');
 		}
 
-	$scope.goNavigate = function($event){
-		$event.stopPropagation();
-		$state.go('map');
-		}
-
-	$scope.goSingle = function($event){
-		$state.go('single');
-		}
-
 	$scope.goEvic = function($event){
 		$state.go('evic');
 		}
-
-  
-	$scope.goCamera = function () {
-      var options = {
-        quality: 75,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: true,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 300,
-        targetHeight: 300,
-        popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false
-    };
-
-        $cordovaCamera.getPicture(options).then(function (imageData) {
-            $scope.imgURI = "data:image/jpeg;base64," + imageData;
-        }, function (err) {
-            // An error occured. Show a message to the user
-      
-        });
-    }
-
-	// $scope.advertisements = [
-	//      {
-	//         "imageURL":"https://firebasestorage.googleapis.com/v0/b/ums-eco-campus-a-1486986690367.appspot.com/o/advertisements%2Fad_1.png?alt=media&token=f6d1a4b7-04bd-45b5-a28e-4917d3a8b84a"
-	//      },
-	//      {
-	//         "imageURL":"https://firebasestorage.googleapis.com/v0/b/ums-eco-campus-a-1486986690367.appspot.com/o/advertisements%2Fad_2.png?alt=media&token=50b86edb-1076-42be-8f36-0136b5f9c33b"
-	//      },
-	//      {
-	//         "imageURL":"img/ad_3.jpg"
-	//      },
-	//      {
-	//         "imageURL":"img/ad4.JPG"
-	//      },
-	//      {
-	//         "imageURL":"img/ad_5.jpg"
-	//      }
-	//   ];
-
-	$scope.mostVisited = [
-	     {
-	        "image":"img/Attraction/chancellery building/chancellery_1.jpg",
-	        "name":"Chancellery Building"
-	     },
-	     {
-	        "image":"img/Attraction/chancellor hall/ums_dewan_canselor.jpg",
-	        "name":"UMS Clock Tower"
-	     },
-	     // {
-	     //    "image":"img/Attraction/clock tower/ums_clock_menarajam_resize.jpg",
-	     //    "name":"UMS Clock Tower"
-	     // },
-	     // {
-	     //    "image":"img/Attraction/mosque/ums_masjid.jpg",
-	     //    "name":"UMS Clock Tower"
-	     // },
-	     {
-	        "image":"img/Attraction/marine museum/marine_1.jpg",
-	        "name":"Marine Musuem UMS"
-	     }
-	  ];
 
 	$scope.showTerm = function() {
      var alertPopup = $ionicPopup.alert({
@@ -123,4 +51,77 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
 		   });
     	
    };
+  
+	$scope.goCamera = function () {
+      var options = {
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 300,
+        targetHeight: 300,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false
+    };
+
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function (err) {
+            // An error occured. Show a message to the user
+      
+        });
+    }
+
+    // $scope.goNavigate = function($event){
+	// 	$event.stopPropagation();
+	// 	$state.go('map');
+	// 	}
+
+	// $scope.goSingle = function($event){
+	// 	$state.go('single');
+	// 	}
+
+	// $scope.advertisements = [
+	//      {
+	//         "imageURL":"https://firebasestorage.googleapis.com/v0/b/ums-eco-campus-a-1486986690367.appspot.com/o/advertisements%2Fad_1.png?alt=media&token=f6d1a4b7-04bd-45b5-a28e-4917d3a8b84a"
+	//      },
+	//      {
+	//         "imageURL":"https://firebasestorage.googleapis.com/v0/b/ums-eco-campus-a-1486986690367.appspot.com/o/advertisements%2Fad_2.png?alt=media&token=50b86edb-1076-42be-8f36-0136b5f9c33b"
+	//      },
+	//      {
+	//         "imageURL":"img/ad_3.jpg"
+	//      },
+	//      {
+	//         "imageURL":"img/ad4.JPG"
+	//      },
+	//      {
+	//         "imageURL":"img/ad_5.jpg"
+	//      }
+	//   ];
+
+	// $scope.mostVisited = [
+	//      {
+	//         "image":"img/Attraction/chancellery building/chancellery_1.jpg",
+	//         "name":"Chancellery Building"
+	//      },
+	//      {
+	//         "image":"img/Attraction/chancellor hall/ums_dewan_canselor.jpg",
+	//         "name":"UMS Clock Tower"
+	//      },
+	//      // {
+	//      //    "image":"img/Attraction/clock tower/ums_clock_menarajam_resize.jpg",
+	//      //    "name":"UMS Clock Tower"
+	//      // },
+	//      // {
+	//      //    "image":"img/Attraction/mosque/ums_masjid.jpg",
+	//      //    "name":"UMS Clock Tower"
+	//      // },
+	//      {
+	//         "image":"img/Attraction/marine museum/marine_1.jpg",
+	//         "name":"Marine Musuem UMS"
+	//      }
+	//   ];
+
+	
 })
