@@ -1,11 +1,39 @@
 /**
  * Created by Gabeta on 24/07/2016. 
  */ 
-app.controller('attractionCtrl',function($scope, $state, $cordovaCamera, $firebase, $ionicFilterBar, getData){
+app.controller('attractionCtrl',function($scope, $state, $cordovaCamera, $firebase, $ionicFilterBar, getData, $cordovaGeolocation){
 
   $scope.sideMenu = true;
 
   $scope.attractions = getData.refAttractions();
+
+  // var attractions = getData.refAttractions();
+  // $scope.deg2rad = function (deg) {return deg * (Math.PI/180);}
+  // var options = {timeout: 10000, enableHighAccuracy: true};
+  // $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+  //     var lat1  = position.coords.latitude;
+  //     var lon1 = position.coords.longitude;
+ 	  
+ 	//   var R = 6371; // Radius of the earth in km
+ 	//   for (i = 0; i < attractions.length; i++){
+
+  //         var dLat = $scope.deg2rad(attractions[i].latitude-lat1);  // deg2rad below
+		//   var dLon = $scope.deg2rad(attractions[i].longitude-lon1); 
+		//   var a = 
+		//     Math.sin(dLat/2) * Math.sin(dLat/2) +
+		//     Math.cos($scope.deg2rad(lat1)) * Math.cos($scope.deg2rad(attractions[i].latitude)) * 
+		//     Math.sin(dLon/2) * Math.sin(dLon/2)
+		//     ; 
+		//   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+		//   var d = R * c;   
+		//   console.log(d+'km'); 
+
+		//   if (d <= 0.3) {$scope.textOverlay = attractions[i].title + ', University Malaysia Sabah'; break;}
+  //       }
+ 	  
+	 //  console.log($scope.textOverlay); 
+
+  //   });
 
   $scope.openAttraction = function (attraction_id) {
 	
@@ -34,7 +62,7 @@ app.controller('attractionCtrl',function($scope, $state, $cordovaCamera, $fireba
         targetWidth: 300,
         targetHeight: 300,
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false
+        saveToPhotoAlbum: true
     };
 
         $cordovaCamera.getPicture(options).then(function (imageData) {

@@ -4,7 +4,7 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
     var options = {timeout: 10000, enableHighAccuracy: true};
 
     $scope.showPopup = function() {
-   $scope.data = {}
+    $scope.data = {}
 
    // An elaborate, custom popup
    var myPopup = $ionicPopup.show({
@@ -119,11 +119,9 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
 
                $scope.navigate= function(){ 
                   console.log(marker.position);
+                  var start = [position.coords.latitude, position.coords.longitude];
                   var dest = [info.lat, info.long];
-                      $cordovaLaunchNavigator.navigate(dest, {
-                        start: null,
-                        enableDebug: true
-                      }).then(function () {
+                      $cordovaLaunchNavigator.navigate(dest).then(function () {
                         // alert("Navigator launched");
                       }, function (err) {
                         alert(err);

@@ -3,23 +3,34 @@
 </ion-header-bar>
 
 <ion-content ng-controller="ExampleController" padding="true">
-	<button class="button button-full button-assertive" ng-click="takePhoto()">
-	Take Photo
-	</button>
-	<img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center; width: 100%">
-			<div class="row">
+	<h4 style="text-align: center;"><b>Geotagging Preview</b></p>
+	
+	<img ng-src="{{image}}" style="text-align: center; width: 100%">
+			<!-- <div class="row">
 		        <img ng-src="{{image}}" style="width: 100%">
-		    </div>
-		    <div class="list">
-	          <label class="item item-input">
-	              <input type="text" ng-model="textOverlay" placeholder="Text to overlay">
-	          </label>
-		    </div>
-		    <div class="row">
-	          <button ng-click="createOverlay()" class="button button-full button-positive">
-	              Overlay
-	          </button>
-		    </div>
+		    </div> -->
+    <!-- <div class="list">
+      <label class="item item-input">
+          <input type="text" ng-model="textOverlay" placeholder="Text to overlay">
+      </label>
+    </div> -->
+    <!-- <div class="row">
+	    <div class="col">
+	    	<button class="button button-full button-assertive" ng-click="takePhoto()">Take Photo</button>
+	    </div>
+	    <div class="col">
+	      	<button ng-click="createOverlay()" class="button button-full button-positive">Share Photo</button>
+	    </div>
+    </div> -->
 </ion-content>
 
+<ion-footer-bar align-title="left" class="bar-light">
+	<div class="col" style="padding-top: 0">
+	  <!-- <button class="button button-small button-balanced" ng-click="" style="width: 85%; text-align: left; border-radius: 20px;margin-left: 10%">&ensp;&ensp;<i class="icon ion-image"></i>&ensp;&ensp;Gallery</button> -->
+	  <button class="button button-small button-balanced" ng-click="takePhoto()" style="width: 85%; text-align: left; border-radius: 20px;margin-left: 10%">&ensp;&ensp;<i class="icon ion-android-done"></i>&ensp;&ensp;Done</button>
+	</div>
+	<div class="col" style="padding-top: 0">
+	  <button class="button button-small button-balanced" ng-click="createOverlay()" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;">&ensp;&ensp;<i class="icon ion-share"></i>&ensp;&ensp;Share</button>
+	</div>
+</ion-footer-bar>
 <canvas id="tempCanvas"></canvas>

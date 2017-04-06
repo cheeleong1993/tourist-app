@@ -7,7 +7,7 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
 ;
 	$scope.advertisements = getData.refAdvertisements();
 
-	$scope.sideMenu = true; 
+	$scope.sideMenu = true;  
 
 	$scope.goMap = function(){
 		$state.go('map');
@@ -62,7 +62,7 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
         targetWidth: 300,
         targetHeight: 300,
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false
+        saveToPhotoAlbum: true
     };
 
         $cordovaCamera.getPicture(options).then(function (imageData) {

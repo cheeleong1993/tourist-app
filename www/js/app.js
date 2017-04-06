@@ -137,11 +137,11 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
 
 
 
-.controller("ExampleController", function ($scope, $cordovaCamera, $cordovaFile, $timeout, $cordovaGeolocation) {
+.controller("ExampleController", function ($scope, $cordovaCamera, $cordovaFile, $timeout, $cordovaGeolocation, getData, $cordovaSocialSharing) {
  
       $scope.takePhoto = function () {
         var options = {
-          quality: 75,
+          quality: 100,
           destinationType: Camera.DestinationType.DATA_URL,
           sourceType: Camera.PictureSourceType.CAMERA,
           allowEdit: false,
@@ -162,122 +162,173 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
             // }, function(error) {
             //    console.dir(error);
             // });     
+            var startimg= $scope.imgURI;
+            $scope.image=startimg;
+
+            var options = {timeout: 10000, enableHighAccuracy: true};
+            var attractions = getData.refAttractions();
+            $scope.deg2rad = function (deg) {return deg * (Math.PI/180);}
+            $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+              var lat1  = position.coords.latitude;
+              var lon1 = position.coords.longitude;
+
+            var R = 6371; // Radius of the earth in km
+            for (i = 0; i < attractions.length; i++){
+
+                  var dLat = $scope.deg2rad(attractions[i].latitude-lat1);  // deg2rad below
+              var dLon = $scope.deg2rad(attractions[i].longitude-lon1); 
+              var a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos($scope.deg2rad(lat1)) * Math.cos($scope.deg2rad(attractions[i].latitude)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2)
+                ; 
+              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+              var d = R * c;   
+              console.log(d+'km'); 
+
+              if (d <= 0.5) {$scope.textOverlay = attractions[i].title + ', University Malaysia Sabah'; break;}
+              else {$scope.textOverlay = 'University Malaysia Sabah, Malaysia'}
+                console.log($scope.textOverlay);
+            }
+            console.log($scope.textOverlay);
+
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            var source =  new Image();
+              source.src = startimg;
+              canvas.width = source.width;
+              canvas.height = source.height;
+
+              console.log(canvas);
+
+              context.drawImage(source,0,0);
+
+              context.font = "10px impact";
+              textWidth = context.measureText($scope.frase).width;
+
+              // if (textWidth > canvas.offsetWidth) {
+              //     context.font = "20px impact";
+              // }
+
+              context.textAlign = 'center';
+              context.fillStyle = 'white';
+
+              context.fillText($scope.textOverlay,canvas.width/2,canvas.height*0.9);
+
+              var imgURI = canvas.toDataURL();
+            
+              $timeout( function(){
+                  $scope.image = imgURI;
+              }, 200);
+
+            $scope.createOverlay= function(){
+             
+              $cordovaSocialSharing.share(null, null, canvas.toDataURL());
+              // //remove the extra image(tempCanvas)
+              // var articleRow = document.querySelector('#tempCanvas');
+              // articleRow.remove();
+            }
+              //console.log(attractions);
+            });
         }, function (err) {
             // An error occured. Show a message to the user
         });
       }
       
-      var startimg="img/evic.jpg";
-      $scope.image=startimg;
-
-      var options = {timeout: 10000, enableHighAccuracy: true};
-      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-        var lat  = position.coords.latitude;
-        var long = position.coords.longitude;
-
-        var geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(lat, long);
-        var request = {
-          latLng: latlng
-        };
-        geocoder.geocode(request, function(data, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            if (data[0] != null) {
-              console.log(data);
-              $scope.textOverlay=data[0].formatted_address;
-            } else {
-              console.log("No address available");
-            }
-          }
-        })
-        
-        console.log(lat,long);
-      });
       
+            // var startimg="img/black.jpg";
+            // $scope.image=startimg;
+            // //var attractions = getData.refAttractions();
 
-      var canvas = document.createElement('canvas');
-      var context = canvas.getContext('2d');
+            // var options = {timeout: 10000, enableHighAccuracy: true};
+            // var attractions = getData.refAttractions();
+            // $scope.deg2rad = function (deg) {return deg * (Math.PI/180);}
+            // $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+            //   var lat1  = position.coords.latitude;
+            //   var lon1 = position.coords.longitude;
 
-      $scope.createOverlay= function(){
+            //   var R = 6371; // Radius of the earth in km
+            //   for (i = 0; i < attractions.length; i++){
 
-        var source =  new Image();
-        source.src = startimg;
-        canvas.width = source.width;
-        canvas.height = source.height;
+            //         var dLat = $scope.deg2rad(attractions[i].latitude-lat1);  // deg2rad below
+            //     var dLon = $scope.deg2rad(attractions[i].longitude-lon1); 
+            //     var a = 
+            //       Math.sin(dLat/2) * Math.sin(dLat/2) +
+            //       Math.cos($scope.deg2rad(lat1)) * Math.cos($scope.deg2rad(attractions[i].latitude)) * 
+            //       Math.sin(dLon/2) * Math.sin(dLon/2)
+            //       ; 
+            //     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            //     var d = R * c;   
+            //     console.log(d+'km'); 
 
-        console.log(canvas);
+            //     if (d <= 0.5) {$scope.textOverlay = attractions[i].title + ', University Malaysia Sabah'; break;}
+            //     else {$scope.textOverlay = 'University Malaysia Sabah, Malaysia'}
+            //       console.log($scope.textOverlay);
+            //   }
+            //   console.log($scope.textOverlay);
+               
+            //   // var geocoder = new google.maps.Geocoder();
+            //   // var latlng = new google.maps.LatLng(lat, long);
+            //   // var request = {
+            //   //   latLng: latlng
+            //   // };
+            //   // geocoder.geocode(request, function(data, status) {
+            //   //   if (status == google.maps.GeocoderStatus.OK) {
+            //   //     if (data[0] != null) {
+            //   //       console.log(data);
+            //   //       $scope.textOverlay=data[1].formatted_address;
+            //   //     } else {
+            //   //       console.log("No address available");
+            //   //     }
+            //   //   }
+            //   // })
 
-        context.drawImage(source,0,0);
+            // });
+            
 
-        context.font = "10px impact";
-        textWidth = context.measureText($scope.frase).width;
+            // var canvas = document.createElement('canvas');
+            // var context = canvas.getContext('2d');
 
-        if (textWidth > canvas.offsetWidth) {
-            context.font = "20px impact";
-        }
+            // $scope.createOverlay= function(){
 
-        context.textAlign = 'center';
-        context.fillStyle = 'white';
+            //   var source =  new Image();
+            //   source.src = startimg;
+            //   canvas.width = source.width;
+            //   canvas.height = source.height;
 
-        context.fillText($scope.textOverlay,canvas.width/2,canvas.height*0.9);
+              
 
-        var imgURI = canvas.toDataURL();
+            //   context.drawImage(source,0,0);
+
+            //   context.font = "10px impact";
+            //   textWidth = context.measureText($scope.frase).width;
+            //   console.log(textWidth);
+            //   if (textWidth > canvas.offsetWidth) {
+            //       context.font = "20px impact";
+            //   }
+
+            //   context.textAlign = 'center';
+            //   context.fillStyle = 'white';
+
+            //   context.fillText($scope.textOverlay,canvas.width/2,canvas.height*0.9);
+
+            //   var imgURI = canvas.toDataURL();
+
+            //   $timeout( function(){
+            //       $scope.image = imgURI;
+            //   }, 200);
+            //   $cordovaSocialSharing.share(null, null, canvas.toDataURL());
+            //   // //remove the extra image(tempCanvas)
+            //   // var articleRow = document.querySelector('#tempCanvas');
+            //   // articleRow.remove();
+            // }
       
-        $timeout( function(){
-            $scope.image = imgURI;
-        }, 200);
-
-        //remove the extra image(tempCanvas)
-        var articleRow = document.querySelector('#tempCanvas');
-        articleRow.remove();
-      }
+      
+      
   });
 
 
-// app.controller('overlayController',function($scope, $timeout){
- 
-//         var startimg="img/evic.jpg";
-//         $scope.image=startimg;
-//         //$scope.textOverlay="Univercity Malaysia Sabah";
- 
-//         var canvas = document.createElement('canvas');
-//         var context = canvas.getContext('2d');
 
-//         $scope.createOverlay= function(){
- 
-//           var source =  new Image();
-//           source.src = startimg;
-//           canvas.width = source.width;
-//           canvas.height = source.height;
- 
-//           console.log(canvas);
- 
-//           context.drawImage(source,0,0);
- 
-//           context.font = "10px impact";
-//           textWidth = context.measureText($scope.frase).width;
- 
-//           if (textWidth > canvas.offsetWidth) {
-//               context.font = "10px impact";
-//           }
-
-//           context.textAlign = 'center';
-//           context.fillStyle = 'white';
- 
-//           context.fillText("Univercity Malaysia Sabah",canvas.width/2,canvas.height*0.9);
- 
-//           var imgURI = canvas.toDataURL();
-        
-//           $timeout( function(){
-//               $scope.image = imgURI;
-//           }, 200);
-
-//           //remove the extra image(tempCanvas)
-//           var articleRow = document.querySelector('#tempCanvas');
-//           articleRow.remove();
-//         }
- 
-// })
 
 
 
