@@ -1,8 +1,52 @@
 /**
  * Created by Gabeta on 24/07/2016. 
  */ 
-app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, getData){ 
+app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, getData, $cordovaLocalNotification, $interval, $cordovaGeolocation){ 
 
+	// context awareness - check location in interval 10 minutes
+	$scope.aware = function(){
+		var options = {timeout: 10000, enableHighAccuracy: true};
+        var attractions = getData.refAttractions();
+        $scope.deg2rad = function (deg) {return deg * (Math.PI/180);}
+        $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+          var lat1  = position.coords.latitude;
+          var lon1 = position.coords.longitude;
+
+        	var R = 6371; // Radius of the earth in km
+	        for (i = 0; i < attractions.length; i++){
+
+	          var dLat = $scope.deg2rad(attractions[i].latitude-lat1);  // deg2rad below
+	          var dLon = $scope.deg2rad(attractions[i].longitude-lon1); 
+	          var a = 
+	            Math.sin(dLat/2) * Math.sin(dLat/2) +
+	            Math.cos($scope.deg2rad(lat1)) * Math.cos($scope.deg2rad(attractions[i].latitude)) * 
+	            Math.sin(dLon/2) * Math.sin(dLon/2)
+	            ; 
+	          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	          var d = R * c;   
+	          console.log(d+'km'); 
+
+	          if (d <= 0.5) {
+	          	var alarmTime = new Date();
+	          	alarmTime.setMinutes(alarmTime.getMinutes() + 0.05);
+	          	$cordovaLocalNotification.add({
+		            date: alarmTime,
+		            title: "You are near to",
+		            message: attractions[i].title,
+		            autoCancel: true
+		        }).then(function () {
+		            console.log("The notification has been set");
+		        });
+	          }
+	        }
+	    });	   
+		}
+
+	$interval(function() {
+		$scope.aware();		 
+	}, 600000);
+
+	
 	var disclaimer = "<p style='text-align: justify;'>Our Service may contain links to third-party web sites or services that are not owned or controlled by UMS. UMS has no control over, and assumes no responsibility for, thecontent, privacy policies, or practices of any third party web sites or services. Youfurther acknowledge and agree that UMS shall not be responsible for liable, directly or indirectly, for any damage or loss caused by or in connection with use of or reliance on any such content, goods or services availabl on or throuh any such web sites or services.</p>" 
 ;
 	$scope.advertisements = getData.refAdvertisements();

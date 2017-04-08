@@ -1,39 +1,80 @@
-app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocation, $cordovaLaunchNavigator, $compile, $ionicPopup, $timeout) { 
+app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocation, $cordovaLaunchNavigator, $compile, $ionicPopup, $timeout, $firebase) { 
+
+    var firebaseRef = new Firebase("https://ums-eco-campus-a-1486986690367.firebaseio.com/"); 
+    var att_ref = firebaseRef.child('attractions/' + $state.params.attraction_id);
 
     var data = getData.get($state.params.attraction_id);
     var options = {timeout: 10000, enableHighAccuracy: true};
-
+ 
     $scope.showPopup = function() {
-    $scope.data = {}
 
-   // An elaborate, custom popup
-   var myPopup = $ionicPopup.show({
-     template: '<input type="password" ng-model="data.wifi">',
-     title: $scope.title,
-     subTitle: 'How much you loved?',
-     scope: $scope,
-     buttons: [
-       { text: 'Cancel' },
-       {
-         text: '<b>Submit</b>',
-         type: 'button-positive',
-         onTap: function(e) {
-           if (!$scope.data.wifi) {
-             //don't allow the user to close unless he enters wifi password
-             e.preventDefault();
-           } else {
-             return $scope.data.wifi;
+      $scope.ratingArr = [{
+        value: 1,
+        icon: 'ion-ios-star-outline'
+      }, {
+        value: 2,
+        icon: 'ion-ios-star-outline'
+      }, {
+        value: 3,
+        icon: 'ion-ios-star-outline'
+      }, {
+        value: 4,
+        icon: 'ion-ios-star-outline'
+      }, {
+        value: 5,
+        icon: 'ion-ios-star-outline'
+      }];
+
+      $scope.setRating = function(val) {
+        var rtgs = $scope.ratingArr;
+        for (var i = 0; i < rtgs.length; i++) {
+          if (i < val) {
+            rtgs[i].icon = 'ion-ios-star';
+          } else {
+            rtgs[i].icon = 'ion-ios-star-outline';
+          }
+        };
+        //alert(val);
+        $scope.rate_val = val;
+      }
+
+     var myPopup = $ionicPopup.show({
+       template: '<a href="javascript:" ng-repeat="r in ratingArr" class="padding" style="text-decoration:none;"><i class="icon {{r.icon}}" ng-click="setRating(r.value)" style="font-size: 25px;color: #ffc900"></i></a>',
+       title: $scope.title,
+       subTitle: 'How much you loved?',
+       scope: $scope,
+       buttons: [
+         { text: 'Cancel' },
+         {
+           text: '<b>Submit</b>',
+           type: 'button-positive',
+           onTap: function(e) {
+             if (!$scope.rate_val) {
+               //don't allow the user to close unless he tap the stars
+               e.preventDefault();
+             } else {
+               return $scope.rate_val;
+             }
            }
-         }
-       },
-     ]
-   });
-   myPopup.then(function(res) {
-     console.log('Tapped!', res);
-   });
-   $timeout(function() {
-      myPopup.close(); //close the popup after 3 seconds for some reason
-   }, 30000);
+         },
+       ]
+     });
+     myPopup.then(function(res) {
+        // var rating_ref = att_ref.child("ratings");
+        // rating_ref.push({rate: res});
+       console.log('Tapped!', res);
+       var ref = new Firebase("https://ums-eco-campus-a-1486986690367.firebaseio.com/");
+       var rating_ref = ref.child("ratings");
+       rating_ref.push({rate: res, attraction_id: $state.params.attraction_id});
+
+       var new_rate_total = parseInt(data.rate_total) + res;
+       var new_rate_count = parseInt(data.rate_count) + 1;
+       var new_rate_average = new_rate_total / new_rate_count;
+       att_ref.update({rate_total: new_rate_total, rate_count: new_rate_count, rate_average: new_rate_average});
+     });
+     $timeout(function() {
+        myPopup.close(); //close the popup after 3 seconds for some reason
+     }, 30000);
   };
     // $scope.slides = [ 
     //    { 
@@ -61,6 +102,8 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
     $scope.title = data.title;
     $scope.description = data.description;
     $scope.imageURL = data.imageURL;
+    $scope.rate_count = data.rate_count;
+    $scope.rate_average = data.rate_average;
 
     $scope.viewMap = function(attraction_id){
 
@@ -68,8 +111,7 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
           attraction_id: $state.params.attraction_id
       });
     }
-
-    
+   
 
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
    

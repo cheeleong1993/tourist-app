@@ -15,8 +15,79 @@
     </div> -->
 
     <div class="row responsive-sm" ng-repeat="attraction in attractions">
-      <div class="wrapper" style="position: relative;">
-        <a ng-click="openAttraction(attraction.id)">
+
+      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average == 0">
+        <a ng-click="openAttraction(attraction.id)" >
+          <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
+            <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>     
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              ( 0 ratings )
+            </p>      
+        </a>
+      </div>
+
+      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average > 0 &&  attraction.rate_average < 1.5">
+        <a ng-click="openAttraction(attraction.id)" >
+          <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
+            <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>     
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              ( {{attraction.rate_count}} ratings )
+            </p>      
+        </a>
+      </div>
+
+      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average >= 1.5 && attraction.rate_average < 2.5">
+        <a ng-click="openAttraction(attraction.id)" >
+          <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/><h3>{{attraction.rate_average}}</h3>
+            <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>     
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              ( {{attraction.rate_count}} ratings )
+            </p>      
+        </a>
+      </div>
+
+      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average >= 2.5 && attraction.rate_average < 3.5">
+        <a ng-click="openAttraction(attraction.id)" >
+          <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
+            <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>     
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              ( {{attraction.rate_count}} ratings )
+            </p>      
+        </a>
+      </div>
+
+      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average >= 3.5 && attraction.rate_average < 4.5">
+        <a ng-click="openAttraction(attraction.id)" >
+          <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
+            <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>     
+              <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
+              <span class="icon ion-ios-star-outline resto-star-color" style="color: white;font-size: 15px"></span>
+              ( {{attraction.rate_count}} ratings )
+            </p>      
+        </a>
+      </div>
+
+      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average >= 4.5">
+        <a ng-click="openAttraction(attraction.id)" >
           <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
             <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
               <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
@@ -24,11 +95,17 @@
               <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>     
               <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
               <span class="icon ion-ios-star resto-star-color" style="color: white;font-size: 15px"></span>
-              (85)
+              ( {{attraction.rate_count}} ratings )
             </p>      
         </a>
       </div>
+
     </div>
 
+    <div>
+      <a href="javascript:" ng-repeat="r in ratingArr" class="padding" style="text-decoration:none;">
+        <i class="icon {{r.icon}}" ng-click="setRating(r.question,r.value)" style="font-size: 30px;color: #ffc900"></i>
+      </a>
+    </div>
   </ion-content>
 </ion-view>

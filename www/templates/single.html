@@ -5,26 +5,116 @@
   </ion-nav-buttons>
   
   <ion-content class="margin-top-10" style="margin-top: 10px">
-    <div class="row responsive-sm"> 
-      <div class="col">
+    <div class="row responsive-sm">  
+
+      <div class="col" ng-if="rate_average == 0">
         <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
           <ion-slide ng-repeat="slide in slides"> -->
             <img src="{{imageURL}}" class="slide-data-img" alt=""/>
           <!-- </ion-slide>
         </ion-slide-box> -->
+            <h4 style="color: #005803">{{title}}</h4>
+            <p>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span> {{rate_count}} ratings </span>
+            </p><br>        
+            <p style="text-align: justify;">{{description}}</p>
+      </div>
 
-            <h4 style="color: #005803">{{title}}</h4><h3></h3>
+      <div class="col" ng-if="rate_average > 0 &&  rate_average < 1.5">
+        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="slide in slides"> -->
+            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
+          <!-- </ion-slide>
+        </ion-slide-box> -->
+            <h4 style="color: #005803">{{title}}</h4>
+            <p >
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span> {{rate_count}} ratings </span>
+            </p><br>        
+            <p style="text-align: justify;">{{description}}</p>
+      </div>
+    
+      <div class="col" ng-if="rate_average >= 1.5 && rate_average < 2.5">
+        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="slide in slides"> -->
+            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
+          <!-- </ion-slide>
+        </ion-slide-box> -->
+            <h4 style="color: #005803">{{title}}</h4>
             <p>
               <span class="icon ion-ios-star resto-star-color"></span>
               <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star"></span>
-              <span> 85 ratings </span>
-            </p><br>
-        
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span> {{rate_count}} ratings </span>
+            </p><br>       
             <p style="text-align: justify;">{{description}}</p>
       </div>
+
+      <div class="col" ng-if="rate_average >= 2.5 && rate_average < 3.5">
+        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="slide in slides"> -->
+            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
+          <!-- </ion-slide>
+        </ion-slide-box> -->
+            <h4 style="color: #005803">{{title}}</h4>
+            <p ><h3>3</h3>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span> {{rate_count}} ratings </span>
+            </p><br>
+            <p style="text-align: justify;">{{description}}</p>
+      </div>
+      
+      <div class="col" ng-if="rate_average >= 3.5 && rate_average < 4.5">
+        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="slide in slides"> -->
+            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
+          <!-- </ion-slide>
+        </ion-slide-box> -->
+            <h4 style="color: #005803">{{title}}</h4>
+            <p >
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star-outline resto-star-color"></span>
+              <span> {{rate_count}} ratings </span>
+            </p><br>        
+            <p style="text-align: justify;">{{description}}</p>
+      </div>
+
+      <div class="col" ng-if="rate_average >= 4.5">
+        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="slide in slides"> -->
+            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
+          <!-- </ion-slide>
+        </ion-slide-box> -->
+            <h4 style="color: #005803">{{title}}</h4>
+            <p >
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span class="icon ion-ios-star resto-star-color"></span>
+              <span> {{rate_count}} ratings </span>
+            </p> <br>       
+            <p style="text-align: justify;">{{description}}</p></div>
+      </div>
+      
     </div>
   </ion-content>
   <ion-footer-bar align-title="left" class="bar-light">
