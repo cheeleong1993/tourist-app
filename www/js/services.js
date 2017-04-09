@@ -1,6 +1,6 @@
 angular.module('ums.services', []) 
 
-.factory('getData', function($firebase) {
+.factory('getData', function($firebase) { 
 
     var ref = new Firebase("https://ums-eco-campus-a-1486986690367.firebaseio.com/"),
 
@@ -9,7 +9,8 @@ angular.module('ums.services', [])
         refBus = $firebase(ref.child('facility-bus')).$asArray();
         refCafe = $firebase(ref.child('facility-cafes')).$asArray();
         refAdvertisements = $firebase(ref.child('advertisements')).$asArray();
-console.log(refAttractions);
+        refGallery = $firebase(ref.child('gallery')).$asArray();
+
     return {    
         ref: function() {
             return ref;
@@ -28,6 +29,9 @@ console.log(refAttractions);
         },
         refAdvertisements: function() {
             return refAdvertisements;
+        },
+        refGallery: function() {
+            return refGallery;
         },
         get: function (attraction_id) {
 

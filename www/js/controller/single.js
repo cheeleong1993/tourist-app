@@ -5,7 +5,13 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
 
     var data = getData.get($state.params.attraction_id);
     var options = {timeout: 10000, enableHighAccuracy: true};
- 
+
+    var gallery = getData.refGallery();
+    $scope.gallery_img = gallery.filter(function (o) {
+
+      return o.attraction_id == $state.params.attraction_id; 
+    });
+
     $scope.showPopup = function() {
 
       $scope.ratingArr = [{
@@ -67,10 +73,19 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
        var rating_ref = ref.child("ratings");
        rating_ref.push({rate: res, attraction_id: $state.params.attraction_id});
 
-       var new_rate_total = parseInt(data.rate_total) + res;
-       var new_rate_count = parseInt(data.rate_count) + 1;
-       var new_rate_average = new_rate_total / new_rate_count;
-       att_ref.update({rate_total: new_rate_total, rate_count: new_rate_count, rate_average: new_rate_average});
+        if (data.rate_total == undefined) 
+        {
+          var reference = ref.child("attractions/" + $state.params.attraction_id);
+          reference.update({rate_total: res, rate_count: 1, rate_average: res});
+        }
+        else
+        {
+          var new_rate_total = parseInt(data.rate_total) + res;
+          var new_rate_count = parseInt(data.rate_count) + 1;
+          var new_rate_average = new_rate_total / new_rate_count;
+          att_ref.update({rate_total: new_rate_total, rate_count: new_rate_count, rate_average: new_rate_average});
+        }
+       
      });
      $timeout(function() {
         myPopup.close(); //close the popup after 3 seconds for some reason

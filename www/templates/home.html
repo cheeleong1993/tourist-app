@@ -12,7 +12,7 @@
 
       <div class="row" style="height: 25%;">
         <div class="col">
-          <button class="button button-outline button-light" ng-click="add()" style=" width: 100%; text-align: center; height: 95px; color: white; border-color: white; border-width: 4px"><i class="icon ion-ios-telephone"></i><p><b>EVIC</b></p></button>
+          <button class="button button-outline button-light" ng-click="goEvic()" style=" width: 100%; text-align: center; height: 95px; color: white; border-color: white; border-width: 4px"><i class="icon ion-ios-telephone"></i><p><b>EVIC</b></p></button>
         </div>
         <div class="col">
           <button class="button button-outline button-light" ng-click="goFacility()" style=" width: 100%; text-align: center; height: 95px; color: white; border-color: white; border-width: 4px"><i class="icon ion-eye"></i><p><b>FACILITIES</b></p></button>
@@ -32,7 +32,7 @@
     <div class="list" style="height: 25%">
       <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
         <ion-slide ng-repeat="advertisement in advertisements">
-          <img src="{{advertisement.imageURL}}" class="slide-data-img" alt=""/>
+          <img ng-src="{{advertisement.imageURL}}" class="slide-data-img" alt=""/>
         </ion-slide>
       </ion-slide-box>
  

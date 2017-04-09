@@ -1,36 +1,36 @@
 <ion-view view-title="Attraction">
   <ion-nav-buttons side="right"> 
       <!-- <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goMap()" ng-class="{'ion-arrow-down-c':!hasFilters,'ion-close-circled':hasFilters}"></a> -->
-      <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goCamera()" ng-class="{'ion-ios-camera':!hasFilters,'ion-close-circled':hasFilters}"></a>
+      <a data-tap-disabled="true" class=" button button-icon icon positive" ng-click="goCamera()" ng-class="{'ion-ios-camera':!hasFilters,'ion-close-circled':hasFilters}"></a> 
   </ion-nav-buttons>
   
   <ion-content class="margin-top-10" style="margin-top: 10px">
     <div class="row responsive-sm">  
 
-      <div class="col" ng-if="rate_average == 0">
-        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="slide in slides"> -->
-            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
-          <!-- </ion-slide>
-        </ion-slide-box> -->
-            <h4 style="color: #005803">{{title}}</h4>
+      <div class="col" ng-if="rate_average == undefined">
+        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="img in gallery_img">
+            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
+          </ion-slide>
+        </ion-slide-box>
+            <h4 style="color: #005803">{{title}}1</h4>
             <p>
               <span class="icon ion-ios-star-outline resto-star-color"></span>
               <span class="icon ion-ios-star-outline resto-star-color"></span>
               <span class="icon ion-ios-star-outline resto-star-color"></span>
               <span class="icon ion-ios-star-outline resto-star-color"></span>
               <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span> {{rate_count}} ratings </span>
+              <span> 0 ratings </span>
             </p><br>        
             <p style="text-align: justify;">{{description}}</p>
       </div>
 
       <div class="col" ng-if="rate_average > 0 &&  rate_average < 1.5">
-        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="slide in slides"> -->
-            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
-          <!-- </ion-slide>
-        </ion-slide-box> -->
+        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="img in gallery_img">
+            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
+          </ion-slide>
+        </ion-slide-box>
             <h4 style="color: #005803">{{title}}</h4>
             <p >
               <span class="icon ion-ios-star resto-star-color"></span>
@@ -44,11 +44,11 @@
       </div>
     
       <div class="col" ng-if="rate_average >= 1.5 && rate_average < 2.5">
-        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="slide in slides"> -->
-            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
-          <!-- </ion-slide>
-        </ion-slide-box> -->
+        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="img in gallery_img">
+            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
+          </ion-slide>
+        </ion-slide-box>
             <h4 style="color: #005803">{{title}}</h4>
             <p>
               <span class="icon ion-ios-star resto-star-color"></span>
@@ -62,11 +62,11 @@
       </div>
 
       <div class="col" ng-if="rate_average >= 2.5 && rate_average < 3.5">
-        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="slide in slides"> -->
-            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
-          <!-- </ion-slide>
-        </ion-slide-box> -->
+        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="img in gallery_img">
+            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
+          </ion-slide>
+        </ion-slide-box>
             <h4 style="color: #005803">{{title}}</h4>
             <p ><h3>3</h3>
               <span class="icon ion-ios-star resto-star-color"></span>
@@ -80,11 +80,11 @@
       </div>
       
       <div class="col" ng-if="rate_average >= 3.5 && rate_average < 4.5">
-        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="slide in slides"> -->
-            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
-          <!-- </ion-slide>
-        </ion-slide-box> -->
+        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="img in gallery_img">
+            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
+          </ion-slide>
+        </ion-slide-box>
             <h4 style="color: #005803">{{title}}</h4>
             <p >
               <span class="icon ion-ios-star resto-star-color"></span>
@@ -98,11 +98,11 @@
       </div>
 
       <div class="col" ng-if="rate_average >= 4.5">
-        <!-- <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="slide in slides"> -->
-            <img src="{{imageURL}}" class="slide-data-img" alt=""/>
-          <!-- </ion-slide>
-        </ion-slide-box> -->
+        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
+          <ion-slide ng-repeat="img in gallery_img">
+            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
+          </ion-slide>
+        </ion-slide-box>
             <h4 style="color: #005803">{{title}}</h4>
             <p >
               <span class="icon ion-ios-star resto-star-color"></span>
@@ -114,7 +114,7 @@
             </p> <br>       
             <p style="text-align: justify;">{{description}}</p></div>
       </div>
-      
+
     </div>
   </ion-content>
   <ion-footer-bar align-title="left" class="bar-light">

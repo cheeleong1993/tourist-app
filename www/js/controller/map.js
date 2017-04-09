@@ -60,7 +60,7 @@ app.controller('mapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
                     }, function (err) {
                       alert(err);
                     });
-                alert("Navigator launched");
+                //alert("Navigator launched");
                 }
               infoWindow.setContent(compiled[0]);
               infoWindow.open($scope.map, marker);
