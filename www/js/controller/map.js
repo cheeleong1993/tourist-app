@@ -19,7 +19,7 @@ app.controller('mapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
         //create current location marker
         var user_marker = new google.maps.Marker({
             map: $scope.map,
-            icon: 'img/marker.png',
+            icon: 'img/user_marker1.png',
             animation: google.maps.Animation.DROP,
             position: user_position
           });      
@@ -40,6 +40,7 @@ app.controller('mapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
           var marker = new google.maps.Marker({
               position: new google.maps.LatLng(info.latitude, info.longitude),
               map: $scope.map,
+              icon: 'img/attraction.png',
               animation: google.maps.Animation.DROP,
               title: info.title,
           });

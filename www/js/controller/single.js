@@ -45,7 +45,7 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
       }
 
      var myPopup = $ionicPopup.show({
-       template: '<a href="javascript:" ng-repeat="r in ratingArr" class="padding" style="text-decoration:none;"><i class="icon {{r.icon}}" ng-click="setRating(r.value)" style="font-size: 25px;color: #ffc900"></i></a>',
+       template: '<a href="javascript:" ng-repeat="r in ratingArr" class="padding" style="text-decoration:none;"><div class="col"><i class="icon {{r.icon}}" ng-click="setRating(r.value)" style="font-size: 25px;color: #ffc900"></i><div></a>',
        title: $scope.title,
        subTitle: 'How much you loved?',
        scope: $scope,
@@ -144,7 +144,7 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
         //create current location marker
         var user_marker = new google.maps.Marker({
             map: $scope.map,
-            icon: 'img/marker.png',
+            icon: 'img/user_marker1.png',
             animation: google.maps.Animation.DROP,
             position: user_position
           });      
@@ -163,6 +163,7 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
 
           var marker = new google.maps.Marker({
               position: new google.maps.LatLng(info.lat, info.long),
+              icon: 'img/attraction.png',
               map: $scope.map,
               animation: google.maps.Animation.DROP,
               title: info.city,
@@ -181,9 +182,9 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
                       $cordovaLaunchNavigator.navigate(dest).then(function () {
                         // alert("Navigator launched");
                       }, function (err) {
-                        alert(err);
+                        // alert(err);
                       });
-                  alert("Navigator launched");
+                  //alert("Navigator launched");
                   }
 
               infoWindow.setContent(compiled[0]);

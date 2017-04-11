@@ -11,8 +11,8 @@
 var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ionic.filter.bar', 'ums.services'])
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function(getData) {
-    console.log(getData);
+  $ionicPlatform.ready(function() {
+
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -141,13 +141,13 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
  
       $scope.takePhoto = function () {
         var options = {
-          quality: 100,
+          quality: 75,
           destinationType: Camera.DestinationType.DATA_URL,
           sourceType: Camera.PictureSourceType.CAMERA,
           allowEdit: false,
           encodingType: Camera.EncodingType.JPEG,
-          targetWidth: 300,
-          targetHeight: 300,
+          targetWidth: 540,
+          targetHeight: 720,
           popoverOptions: CameraPopoverOptions,
           saveToPhotoAlbum: true
         };
@@ -186,9 +186,17 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
               var d = R * c;   
               console.log(d+'km'); 
 
-              if (d <= 0.5) {$scope.textOverlay = attractions[i].title + ', University Malaysia Sabah'; break;}
-              else {$scope.textOverlay = 'University Malaysia Sabah, Malaysia'}
-                console.log($scope.textOverlay);
+              if (d <= 0.5) {
+
+                $scope.textOverlay1 = attractions[i].title; 
+                $scope.textOverlay2 = 'University Malaysia Sabah, Malaysia';
+                break;
+              }
+              else {
+
+                $scope.textOverlay1 = '';
+                $scope.textOverlay2 = 'University Malaysia Sabah, Malaysia';
+              }
             }
             console.log($scope.textOverlay);
 
@@ -203,7 +211,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
 
               context.drawImage(source,0,0);
 
-              context.font = "10px impact";
+              context.font = 0.04*source.height + "px impact";
               textWidth = context.measureText($scope.frase).width;
 
               // if (textWidth > canvas.offsetWidth) {
@@ -213,7 +221,8 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
               context.textAlign = 'center';
               context.fillStyle = 'white';
 
-              context.fillText($scope.textOverlay,canvas.width/2,canvas.height*0.9);
+              context.fillText($scope.textOverlay1,canvas.width/2,canvas.height*0.90);
+              context.fillText($scope.textOverlay2,canvas.width/2,canvas.height*0.95);
 
               var imgURI = canvas.toDataURL();
             

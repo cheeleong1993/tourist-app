@@ -44,7 +44,7 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
 
 	$interval(function() {
 		$scope.aware();		 
-	}, 600000);
+	}, 300000);
 
 	
 	var disclaimer = "<p style='text-align: justify;'>Our Service may contain links to third-party web sites or services that are not owned or controlled by UMS. UMS has no control over, and assumes no responsibility for, thecontent, privacy policies, or practices of any third party web sites or services. Youfurther acknowledge and agree that UMS shall not be responsible for liable, directly or indirectly, for any damage or loss caused by or in connection with use of or reliance on any such content, goods or services availabl on or throuh any such web sites or services.</p>" 

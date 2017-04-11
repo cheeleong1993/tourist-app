@@ -75,6 +75,7 @@ app.controller('atmMapCtrl', function($scope, $state, $cordovaGeolocation, $cord
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(info.latitude, info.longitude),
             map: $scope.map,
+            icon: 'img/bank.png',
             animation: google.maps.Animation.DROP,
             title: info.name,
         });
@@ -155,6 +156,7 @@ app.controller('cafeMapCtrl', function($scope, $state, $cordovaGeolocation, $cor
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(info.latitude, info.longitude),
             map: $scope.map,
+            icon: 'img/cafe.png',
             animation: google.maps.Animation.DROP,
             title: info.name,
         });
@@ -248,6 +250,7 @@ app.controller('toiletMapCtrl', function($scope, $state, $cordovaGeolocation, $c
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(info.lat, info.long),
             map: $scope.map,
+            icon: 'img/toilets.png',
             animation: google.maps.Animation.DROP,
             title: info.city,
         });
@@ -367,6 +370,7 @@ app.controller('busStopMapCtrl', function($scope, $state, $cordovaGeolocation, $
             position: new google.maps.LatLng(info.latitude, info.longitude),
             map: $scope.map,
             animation: google.maps.Animation.DROP,
+            icon: 'img/bustour.png',
             title: info.name,
         });
         marker.content = '<div class="infoWindowContent"></div>';

@@ -1,36 +1,206 @@
-<!-- <ion-view view-title="Take A Photo">
-  <ion-content class="margin-top-10" ng-controller="ExampleController" padding="true"> 
-        <button class="button button-full button-assertive" ng-click="takePhoto()">Take Photo</button>
-		<button class="button button-full button-assertive" ng-click="choosePhoto()">Choose Photo</button>
-		<img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
-    </ion-content>
-</ion-view>  -->
+<!-- .controller("ExampleController", function ($scope, $cordovaCamera, $cordovaFile, $timeout, $cordovaGeolocation, getData, $cordovaSocialSharing) {
+ 
+      $scope.takePhoto = function () {
+        var options = {
+          quality: 75,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          allowEdit: false,
+          encodingType: Camera.EncodingType.JPEG,
+          popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: true
+        };
 
-<!-- <ion-view view-title="Take A Photo">
-	<ion-content class="margin-top-10" padding="true">
-	  <button class="button button-energized" ng-click="addImage()">
-		  Add image
-	  </button><br>
-	  <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
-	 </ion-content>
-</ion-view>  -->
+        $cordovaCamera.getPicture(options).then(function (imageData, sourcePath) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            // var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
+            // var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
 
-<ion-view view-title="Take A Photo">
-	<ion-content ng-controller="overlayController">
-	      <div class="row">
-	        <img ng-src="{{image}}" style="width: 100%">
-	      </div>
-	      <div class="list">
-	          <label class="item item-input">
-	              <input type="text" ng-model="textOverlay" placeholder="Text to overlay">
-	          </label>
-	      </div>
-	      <div class="row">
-	          <button ng-click="createOverlay()" class="button button-full button-positive">
-	              Overlay
-	          </button>
-	      </div>
+            // $cordovaFile.copyFile(sourceDirectory, sourceFileName, cordova.file.dataDirectory, sourceFileName).then(function(success) {
+            //    $scope.fileName = cordova.file.dataDirectory + sourceFileName;
+            // }, function(error) {
+            //    console.dir(error);
+            // });     
+            var startimg= $scope.imgURI;
+            $scope.image=startimg;
 
-	</ion-content>
-	<canvas id="tempCanvas"></canvas>
-</ion-view> 
+            var options = {timeout: 10000, enableHighAccuracy: true};
+            var attractions = getData.refAttractions();
+            $scope.deg2rad = function (deg) {return deg * (Math.PI/180);}
+            $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+              var lat1  = position.coords.latitude;
+              var lon1 = position.coords.longitude;
+
+            var R = 6371; // Radius of the earth in km
+            for (i = 0; i < attractions.length; i++){
+
+                  var dLat = $scope.deg2rad(attractions[i].latitude-lat1);  // deg2rad below
+              var dLon = $scope.deg2rad(attractions[i].longitude-lon1); 
+              var a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos($scope.deg2rad(lat1)) * Math.cos($scope.deg2rad(attractions[i].latitude)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2)
+                ; 
+              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+              var d = R * c;   
+              console.log(d+'km'); 
+
+              if (d <= 0.5) {
+
+                  $scope.textOverlay1 = attractions[i].title; 
+                  $scope.textOverlay2 = 'University Malaysia Sabah, Malaysia';
+                  break;
+                }
+                else {
+
+                  $scope.textOverlay1 = '';
+                  $scope.textOverlay2 = 'University Malaysia Sabah, Malaysia';
+                }
+            }
+            console.log($scope.textOverlay);
+
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            var source =  new Image();
+              source.src = startimg;
+              canvas.width = source.width;
+              canvas.height = source.height;
+
+              console.log(canvas);
+
+              context.drawImage(source,0,0);
+
+              context.font = 0.04*source.height + "px impact";
+              textWidth = context.measureText($scope.frase).width;
+
+              // if (textWidth > canvas.offsetWidth) {
+              //     context.font = "20px impact";
+              // }
+
+              context.textAlign = 'center';
+              context.fillStyle = 'white';
+
+              context.fillText($scope.textOverlay1,canvas.width/2,canvas.height*0.90);
+              context.fillText($scope.textOverlay2,canvas.width/2,canvas.height*0.95);
+
+              var imgURI = canvas.toDataURL();
+            
+              $timeout( function(){
+                  $scope.image = imgURI;
+              }, 200);
+
+            $scope.createOverlay= function(){
+             
+              $cordovaSocialSharing.share(null, null, canvas.toDataURL());
+              // //remove the extra image(tempCanvas)
+              // var articleRow = document.querySelector('#tempCanvas');
+              // articleRow.remove();
+            }
+              //console.log(attractions);
+            });
+        }, function (err) {
+            // An error occured. Show a message to the user
+        });
+      }
+      
+      
+            // var startimg="img/black.jpg";
+            // $scope.image=startimg;
+            // //var attractions = getData.refAttractions();
+
+            // var options = {timeout: 10000, enableHighAccuracy: true};
+            // var attractions = getData.refAttractions();
+            // $scope.deg2rad = function (deg) {return deg * (Math.PI/180);}
+            // $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+            //   var lat1  = position.coords.latitude;
+            //   var lon1 = position.coords.longitude;
+
+            //   var R = 6371; // Radius of the earth in km
+            //   for (i = 0; i < attractions.length; i++){
+
+            //         var dLat = $scope.deg2rad(attractions[i].latitude-lat1);  // deg2rad below
+            //     var dLon = $scope.deg2rad(attractions[i].longitude-lon1); 
+            //     var a = 
+            //       Math.sin(dLat/2) * Math.sin(dLat/2) +
+            //       Math.cos($scope.deg2rad(lat1)) * Math.cos($scope.deg2rad(attractions[i].latitude)) * 
+            //       Math.sin(dLon/2) * Math.sin(dLon/2)
+            //       ; 
+            //     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            //     var d = R * c;   
+            //     console.log(d+'km'); 
+
+            //     if (d <= 0.5) {
+
+            //       $scope.textOverlay1 = attractions[i].title; 
+            //       $scope.textOverlay2 = 'University Malaysia Sabah, Malaysia';
+            //       break;
+            //     }
+            //     else {
+
+            //       $scope.textOverlay1 = '';
+            //       $scope.textOverlay2 = 'University Malaysia Sabah, Malaysia';
+            //     }
+            //   }
+               
+            //   // var geocoder = new google.maps.Geocoder();
+            //   // var latlng = new google.maps.LatLng(lat, long);
+            //   // var request = {
+            //   //   latLng: latlng
+            //   // };
+            //   // geocoder.geocode(request, function(data, status) {
+            //   //   if (status == google.maps.GeocoderStatus.OK) {
+            //   //     if (data[0] != null) {
+            //   //       console.log(data);
+            //   //       $scope.textOverlay=data[1].formatted_address;
+            //   //     } else {
+            //   //       console.log("No address available");
+            //   //     }
+            //   //   }
+            //   // })
+
+            // });
+            
+
+            // var canvas = document.createElement('canvas');
+            // var context = canvas.getContext('2d');
+
+            // $scope.createOverlay= function(){
+
+            //   var source =  new Image();
+            //   source.src = startimg;
+            //   canvas.width = source.width;
+            //   canvas.height = source.height;
+
+              
+
+            //   context.drawImage(source,0,0);
+
+            //   context.font = 0.04*source.height + "px impact";
+            //   textWidth = context.measureText($scope.frase).width;
+            //   console.log(textWidth);
+            //   console.log(canvas.offsetWidth);
+            //   if (textWidth > canvas.offsetWidth) {
+            //       context.font = 0.04*source.height + "px impact";
+            //   }
+
+            //   context.textAlign = 'center';
+            //   context.fillStyle = 'white';
+
+            //   context.fillText($scope.textOverlay1,canvas.width/2,canvas.height*0.90);
+            //   context.fillText($scope.textOverlay2,canvas.width/2,canvas.height*0.95);
+
+            //   var imgURI = canvas.toDataURL();
+
+            //   $timeout( function(){
+            //       $scope.image = imgURI;
+            //   }, 200);
+            //   $cordovaSocialSharing.share(null, null, canvas.toDataURL());
+            //   // //remove the extra image(tempCanvas)
+            //   // var articleRow = document.querySelector('#tempCanvas');
+            //   // articleRow.remove();
+            // }
+      
+      
+      
+  });
+ -->
