@@ -40,7 +40,7 @@ app.controller('mapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
           var marker = new google.maps.Marker({
               position: new google.maps.LatLng(info.latitude, info.longitude),
               map: $scope.map,
-              icon: 'img/attraction.png',
+              // icon: 'img/attraction.png',
               animation: google.maps.Animation.DROP,
               title: info.title,
           });

@@ -26,7 +26,7 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
 	          var d = R * c;   
 	          console.log(d+'km'); 
 
-	          if (d <= 0.5) {
+	          if (d <= 0.2) {
 	          	var alarmTime = new Date();
 	          	alarmTime.setMinutes(alarmTime.getMinutes() + 0.05);
 	          	$cordovaLocalNotification.add({

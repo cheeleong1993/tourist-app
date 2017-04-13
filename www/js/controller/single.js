@@ -163,7 +163,7 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
 
           var marker = new google.maps.Marker({
               position: new google.maps.LatLng(info.lat, info.long),
-              icon: 'img/attraction.png',
+              // icon: 'img/attraction.png',
               map: $scope.map,
               animation: google.maps.Animation.DROP,
               title: info.city,
