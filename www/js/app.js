@@ -2,7 +2,7 @@
 // background, bottm section #ccffbb
 // button1 #01bb9b
 // button2 #028482
-// 320*480
+// 320*480 
 // Ionic Starter App
   
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -10,7 +10,7 @@
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ionic.filter.bar', 'ums.services'])
 
-.run(function($ionicPlatform) {
+.run(function($rootScope, $ionicPopup, $ionicPlatform, $ionicHistory) {
   $ionicPlatform.ready(function() {
 
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -49,6 +49,37 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
         );
     }
   });
+
+  $ionicPlatform.registerBackButtonAction(function(e) {
+
+    e.preventDefault();
+
+    function showConfirm() {
+      var confirmPopup = $ionicPopup.confirm({
+         template: 'Are you sure to exit this application?'
+       });
+      confirmPopup.then(function(res) {
+         if(res) {
+          window.close();
+        ionic.Platform.exitApp();
+          console.log('quit');
+         } else {
+           console.log('stay');
+         }
+       });
+    };
+
+    // Is there a page to go back to?
+    if ($ionicHistory.backView()) {
+    // Go back in history
+    $ionicHistory.backView().go();
+    } else {
+    // This is the last page: Show confirmation popup
+    showConfirm();
+    }
+
+    return false;
+    }, 101);
 })
 
   .config(function($stateProvider,$urlRouterProvider){
@@ -122,7 +153,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
       //controller: 'imageController'
     })
     $stateProvider.state('camera1', {
-      url: '/camera1',
+      url: '/camera1/:photo',
       templateUrl: 'templates/camera1.html',
     })
     $stateProvider.state('contact', {
@@ -137,31 +168,10 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
 
 
 
-.controller("ExampleController", function ($scope, $cordovaCamera, $cordovaFile, $timeout, $cordovaGeolocation, getData, $cordovaSocialSharing) {
+.controller("ExampleController", function ($scope, $cordovaCamera, $cordovaFile, $timeout, $cordovaGeolocation, getData, $cordovaSocialSharing, $state) {
  
-      $scope.takePhoto = function () {
-        var options = {
-          quality: 75,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.CAMERA,
-          allowEdit: false,
-          encodingType: Camera.EncodingType.JPEG,
-          targetWidth: 540,
-          targetHeight: 720,
-          popoverOptions: CameraPopoverOptions,
-          saveToPhotoAlbum: true
-        };
-
-        $cordovaCamera.getPicture(options).then(function (imageData, sourcePath) {
-            $scope.imgURI = "data:image/jpeg;base64," + imageData;
-            // var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
-            // var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
-
-            // $cordovaFile.copyFile(sourceDirectory, sourceFileName, cordova.file.dataDirectory, sourceFileName).then(function(success) {
-            //    $scope.fileName = cordova.file.dataDirectory + sourceFileName;
-            // }, function(error) {
-            //    console.dir(error);
-            // });     
+            $scope.imgURI = $state.params.photo;
+            
             var startimg= $scope.imgURI;
             $scope.image=startimg;
 
@@ -238,101 +248,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
               // articleRow.remove();
             }
               //console.log(attractions);
-            });
-        }, function (err) {
-            // An error occured. Show a message to the user
-        });
-      }
-      
-      
-            // var startimg="img/black.jpg";
-            // $scope.image=startimg;
-            // //var attractions = getData.refAttractions();
-
-            // var options = {timeout: 10000, enableHighAccuracy: true};
-            // var attractions = getData.refAttractions();
-            // $scope.deg2rad = function (deg) {return deg * (Math.PI/180);}
-            // $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-            //   var lat1  = position.coords.latitude;
-            //   var lon1 = position.coords.longitude;
-
-            //   var R = 6371; // Radius of the earth in km
-            //   for (i = 0; i < attractions.length; i++){
-
-            //         var dLat = $scope.deg2rad(attractions[i].latitude-lat1);  // deg2rad below
-            //     var dLon = $scope.deg2rad(attractions[i].longitude-lon1); 
-            //     var a = 
-            //       Math.sin(dLat/2) * Math.sin(dLat/2) +
-            //       Math.cos($scope.deg2rad(lat1)) * Math.cos($scope.deg2rad(attractions[i].latitude)) * 
-            //       Math.sin(dLon/2) * Math.sin(dLon/2)
-            //       ; 
-            //     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-            //     var d = R * c;   
-            //     console.log(d+'km'); 
-
-            //     if (d <= 0.5) {$scope.textOverlay = attractions[i].title + ', University Malaysia Sabah'; break;}
-            //     else {$scope.textOverlay = 'University Malaysia Sabah, Malaysia'}
-            //       console.log($scope.textOverlay);
-            //   }
-            //   console.log($scope.textOverlay);
-               
-            //   // var geocoder = new google.maps.Geocoder();
-            //   // var latlng = new google.maps.LatLng(lat, long);
-            //   // var request = {
-            //   //   latLng: latlng
-            //   // };
-            //   // geocoder.geocode(request, function(data, status) {
-            //   //   if (status == google.maps.GeocoderStatus.OK) {
-            //   //     if (data[0] != null) {
-            //   //       console.log(data);
-            //   //       $scope.textOverlay=data[1].formatted_address;
-            //   //     } else {
-            //   //       console.log("No address available");
-            //   //     }
-            //   //   }
-            //   // })
-
-            // });
-            
-
-            // var canvas = document.createElement('canvas');
-            // var context = canvas.getContext('2d');
-
-            // $scope.createOverlay= function(){
-
-            //   var source =  new Image();
-            //   source.src = startimg;
-            //   canvas.width = source.width;
-            //   canvas.height = source.height;
-
-              
-
-            //   context.drawImage(source,0,0);
-
-            //   context.font = "10px impact";
-            //   textWidth = context.measureText($scope.frase).width;
-            //   console.log(textWidth);
-            //   if (textWidth > canvas.offsetWidth) {
-            //       context.font = "20px impact";
-            //   }
-
-            //   context.textAlign = 'center';
-            //   context.fillStyle = 'white';
-
-            //   context.fillText($scope.textOverlay,canvas.width/2,canvas.height*0.9);
-
-            //   var imgURI = canvas.toDataURL();
-
-            //   $timeout( function(){
-            //       $scope.image = imgURI;
-            //   }, 200);
-            //   $cordovaSocialSharing.share(null, null, canvas.toDataURL());
-            //   // //remove the extra image(tempCanvas)
-            //   // var articleRow = document.querySelector('#tempCanvas');
-            //   // articleRow.remove();
-            // }
-      
-      
+            });   
       
   });
 

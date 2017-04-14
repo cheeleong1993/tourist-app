@@ -10,25 +10,28 @@ app.controller('facilityCtrl',function($scope, $state, $cordovaCamera){
 		}
 
 	$scope.goCamera = function () {
-	  var options = {
-	    quality: 75,
-	    destinationType: Camera.DestinationType.DATA_URL,
-	    sourceType: Camera.PictureSourceType.CAMERA,
-	    allowEdit: true,
-	    encodingType: Camera.EncodingType.JPEG,
-	    targetWidth: 300,
-	    targetHeight: 300,
-	    popoverOptions: CameraPopoverOptions,
-	    saveToPhotoAlbum: true
-	};
+      var options = {
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: false,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 540,
+        targetHeight: 720,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: true
+    };
 
-	    $cordovaCamera.getPicture(options).then(function (imageData) {
-	        $scope.imgURI = "data:image/jpeg;base64," + imageData;
-	    }, function (err) {
-	        // An error occured. Show a message to the user
-	  
-	    });
-	}
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            $state.go('camera1', {
+            photo: $scope.imgURI
+        });
+        }, function (err) {
+            // An error occured. Show a message to the user
+      
+        });
+    }
 
 	$scope.goAtmMap = function(){ 
 		$state.go('atmMap');

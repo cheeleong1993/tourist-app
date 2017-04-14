@@ -1,10 +1,27 @@
 /**
  * Created by Gabeta on 24/07/2016. 
- */ 
+ */  
 app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, getData, $cordovaLocalNotification, $interval, $cordovaGeolocation){ 
 
 	// context awareness - check location in interval 10 minutes
-	$scope.aware = function(){
+	$scope.nearby_att = 'lo';
+	$scope.notify = function(title){
+
+		var alarmTime = new Date();
+	    alarmTime.setMinutes(alarmTime.getMinutes() + 0.05);
+
+		$cordovaLocalNotification.add({
+            date: alarmTime,
+            title: "You are near to",
+            message: title,
+            autoCancel: true
+        }).then(function () {
+        	
+            console.log("The notification has been set");
+        });
+	}
+
+	$scope.get_loc = function(){
 		var options = {timeout: 10000, enableHighAccuracy: true};
         var attractions = getData.refAttractions();
         $scope.deg2rad = function (deg) {return deg * (Math.PI/180);}
@@ -24,32 +41,30 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
 	            ; 
 	          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 	          var d = R * c;   
-	          console.log(d+'km'); 
+	          //console.log(d+'km'); 
+	          console.log($scope.nearby_att);
+	          if (d <= 0.5) {
+	          	if ($scope.nearby_att != attractions[i].title) {
 
-	          if (d <= 0.2) {
-	          	var alarmTime = new Date();
-	          	alarmTime.setMinutes(alarmTime.getMinutes() + 0.05);
-	          	$cordovaLocalNotification.add({
-		            date: alarmTime,
-		            title: "You are near to",
-		            message: attractions[i].title,
-		            autoCancel: true
-		        }).then(function () {
-		            console.log("The notification has been set");
-		        });
+	          		$scope.nearby_att = attractions[i].title;
+	          		$scope.notify(attractions[i].title);
+
+	          	}
+	          	
 	          }
 	        }
 	    });	   
 		}
 
+
 	$interval(function() {
-		$scope.aware();		 
-	}, 300000);
+		$scope.get_loc();	
+	}, 30000);
 
 	
 	var disclaimer = "<p style='text-align: justify;'>Our Service may contain links to third-party web sites or services that are not owned or controlled by UMS. UMS has no control over, and assumes no responsibility for, thecontent, privacy policies, or practices of any third party web sites or services. Youfurther acknowledge and agree that UMS shall not be responsible for liable, directly or indirectly, for any damage or loss caused by or in connection with use of or reliance on any such content, goods or services availabl on or throuh any such web sites or services.</p>" 
 ;
-	$scope.advertisements = getData.refAdvertisements();
+	// $scope.advertisements = getData.refAdvertisements();
 
 	$scope.sideMenu = true;  
 
@@ -101,16 +116,19 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
         quality: 75,
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: true,
+        allowEdit: false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 300,
-        targetHeight: 300,
+        targetWidth: 540,
+        targetHeight: 720,
         popoverOptions: CameraPopoverOptions,
         saveToPhotoAlbum: true
     };
 
         $cordovaCamera.getPicture(options).then(function (imageData) {
             $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            $state.go('camera1', {
+		        photo: $scope.imgURI
+		    });
         }, function (err) {
             // An error occured. Show a message to the user
       
@@ -126,23 +144,24 @@ app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, 
 	// 	$state.go('single');
 	// 	}
 
-	// $scope.advertisements = [
-	//      {
-	//         "imageURL":"https://firebasestorage.googleapis.com/v0/b/ums-eco-campus-a-1486986690367.appspot.com/o/advertisements%2Fad_1.png?alt=media&token=f6d1a4b7-04bd-45b5-a28e-4917d3a8b84a"
-	//      },
-	//      {
-	//         "imageURL":"https://firebasestorage.googleapis.com/v0/b/ums-eco-campus-a-1486986690367.appspot.com/o/advertisements%2Fad_2.png?alt=media&token=50b86edb-1076-42be-8f36-0136b5f9c33b"
-	//      },
-	//      {
-	//         "imageURL":"img/ad_3.jpg"
-	//      },
-	//      {
-	//         "imageURL":"img/ad4.JPG"
-	//      },
-	//      {
-	//         "imageURL":"img/ad_5.jpg"
-	//      }
-	//   ];
+	$scope.advertisements = [
+	     {
+	        "imageURL":"img/ad_1.png"
+	     },
+	     {
+	        "imageURL":"img/ad_2.png"
+	     },	
+	     {
+	        "imageURL":"img/ad_3.jpg"
+	     }
+	     // ,
+	     // {
+	     //    "imageURL":"img/ad4.JPG"
+	     // },
+	     // {
+	     //    "imageURL":"img/ad_5.jpg"
+	     // }
+	  ];
 
 	// $scope.mostVisited = [
 	//      {

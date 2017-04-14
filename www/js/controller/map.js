@@ -59,11 +59,11 @@ app.controller('mapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
                     }).then(function () {
                       // alert("Navigator launched");
                     }, function (err) {
-                      alert(err);
+                      //alert(err);
                     });
                 //alert("Navigator launched");
                 }
-              infoWindow.setContent(compiled[0]);
+              infoWindow.setContent(compiled[0]); 
               infoWindow.open($scope.map, marker);
               console.log(contentString);
               });
@@ -86,16 +86,19 @@ app.controller('mapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
         quality: 75,
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: true,
+        allowEdit: false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 300,
-        targetHeight: 300,
+        targetWidth: 540,
+        targetHeight: 720,
         popoverOptions: CameraPopoverOptions,
         saveToPhotoAlbum: true
     };
 
         $cordovaCamera.getPicture(options).then(function (imageData) {
             $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            $state.go('camera1', {
+            photo: $scope.imgURI
+        });
         }, function (err) {
             // An error occured. Show a message to the user
       
