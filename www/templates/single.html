@@ -8,111 +8,135 @@
     <div class="row responsive-sm">  
 
       <div class="col" ng-if="rate_average == undefined">
-        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="img in gallery_img">
-            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
-          </ion-slide>
-        </ion-slide-box>
-            <h4 style="color: #005803">{{title}}1</h4>
-            <p>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span> 0 ratings </span>
-            </p><br>        
+        <img src="{{imageURL}}" class="slide-data-img" alt=""/>
+            <h4 style="color: #005803">{{title}}</h4>
+            <div class="row">
+              <div class="col" style="padding-top: 0">
+                <p>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span><br>
+                  <span> 0 ratings </span>
+                </p>
+              </div>
+              <div class="col" style="padding-top: 0">
+                <button class="button button-balanced button-outline" ng-click="showPopup()" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;"><i class="icon ion-android-favorite"></i>&ensp;Rate this</button>
+              </div>
+            </div>
+            <br>        
             <p style="text-align: justify;">{{description}}</p>
       </div>
 
       <div class="col" ng-if="rate_average > 0 &&  rate_average < 1.5">
-        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="img in gallery_img">
-            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
-          </ion-slide>
-        </ion-slide-box>
+        <img src="{{imageURL}}" class="slide-data-img" alt=""/>
             <h4 style="color: #005803">{{title}}</h4>
-            <p >
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span> {{rate_count}} ratings </span>
-            </p><br>        
-            <p style="text-align: justify;">{{description}}</p>
+            <div class="row">
+              <div class="col" style="padding-top: 0">
+                <p>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span><br>
+                  <span> {{rate_count}} ratings </span>
+                </p>
+              </div>
+              <div class="col" style="padding-top: 0">
+                <button class="button button-balanced button-outline" ng-click="showPopup()" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;"><i class="icon ion-android-favorite"></i>&ensp;Rate this</button>
+              </div>
+            </div>
+          <br>        
+          <p style="text-align: justify;">{{description}}</p>
       </div>
     
       <div class="col" ng-if="rate_average >= 1.5 && rate_average < 2.5">
-        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="img in gallery_img">
-            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
-          </ion-slide>
-        </ion-slide-box>
+        <img src="{{imageURL}}" class="slide-data-img" alt=""/>
             <h4 style="color: #005803">{{title}}</h4>
-            <p>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span> {{rate_count}} ratings </span>
-            </p><br>       
-            <p style="text-align: justify;">{{description}}</p>
+            <div class="row">
+              <div class="col" style="padding-top: 0">
+                <p>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span><br>
+                  <span> {{rate_count}} ratings </span>
+                </p>
+              </div>
+              <div class="col" style="padding-top: 0">
+                <button class="button button-balanced button-outline" ng-click="showPopup()" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;"><i class="icon ion-android-favorite"></i>&ensp;Rate this</button>
+              </div>
+            </div>  
+          <br>       
+          <p style="text-align: justify;">{{description}}</p>
       </div>
 
       <div class="col" ng-if="rate_average >= 2.5 && rate_average < 3.5">
-        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="img in gallery_img">
-            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
-          </ion-slide>
-        </ion-slide-box>
+        <img src="{{imageURL}}" class="slide-data-img" alt=""/>
             <h4 style="color: #005803">{{title}}</h4>
-            <p ><h3>3</h3>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span> {{rate_count}} ratings </span>
-            </p><br>
-            <p style="text-align: justify;">{{description}}</p>
+            <div class="row">
+              <div class="col" style="padding-top: 0">
+                <p ><h3>3</h3>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span><br>
+                  <span> {{rate_count}} ratings </span>
+                </p>
+              </div>
+              <div class="col" style="padding-top: 0">
+                <button class="button button-balanced button-outline" ng-click="showPopup()" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;"><i class="icon ion-android-favorite"></i>&ensp;Rate this</button>
+              </div>
+            </div>
+          <br>
+          <p style="text-align: justify;">{{description}}</p>
       </div>
       
       <div class="col" ng-if="rate_average >= 3.5 && rate_average < 4.5">
-        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="img in gallery_img">
-            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
-          </ion-slide>
-        </ion-slide-box>
+        <img src="{{imageURL}}" class="slide-data-img" alt=""/>
             <h4 style="color: #005803">{{title}}</h4>
-            <p >
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star-outline resto-star-color"></span>
-              <span> {{rate_count}} ratings </span>
-            </p><br>        
-            <p style="text-align: justify;">{{description}}</p>
+            <div class="row">
+              <div class="col" style="padding-top: 0">
+                <p>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star-outline resto-star-color"></span><br>
+                  <span> {{rate_count}} ratings </span>
+                </p>
+              </div>
+              <div class="col" style="padding-top: 0">
+                <button class="button button-balanced button-outline" ng-click="showPopup()" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;"><i class="icon ion-android-favorite"></i>&ensp;Rate this</button>
+              </div>
+            </div>
+          <br>        
+          <p style="text-align: justify;">{{description}}</p>
       </div>
 
       <div class="col" ng-if="rate_average >= 4.5">
-        <ion-slide-box auto-play="true" does-continue="true" show-pager="true">
-          <ion-slide ng-repeat="img in gallery_img">
-            <img src="{{img.imageURL}}" class="slide-data-img" alt=""/>
-          </ion-slide>
-        </ion-slide-box>
+        <img src="{{imageURL}}" class="slide-data-img" alt=""/>
             <h4 style="color: #005803">{{title}}</h4>
-            <p >
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span class="icon ion-ios-star resto-star-color"></span>
-              <span> {{rate_count}} ratings </span>
-            </p> <br>       
-            <p style="text-align: justify;">{{description}}</p></div>
+            <div class="row">
+              <div class="col" style="padding-top: 0">
+                <p>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span>
+                  <span class="icon ion-ios-star resto-star-color"></span><br>
+                  <span> {{rate_count}} ratings </span>
+                </p>
+              </div>
+              <div class="col" style="padding-top: 0">
+                <button class="button button-balanced button-outline" ng-click="showPopup()" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;"><i class="icon ion-android-favorite"></i>&ensp;Rate this</button>
+              </div>
+            </div>
+          <br>       
+          <p style="text-align: justify;">{{description}}</p></div>
       </div>
 
     </div>
@@ -120,7 +144,7 @@
   <ion-footer-bar align-title="left" class="bar-light">
     <div class="col" style="padding-top: 0">
       <!-- <button class="button button-small button-balanced" ng-click="" style="width: 85%; text-align: left; border-radius: 20px;margin-left: 10%">&ensp;&ensp;<i class="icon ion-image"></i>&ensp;&ensp;Gallery</button> -->
-      <button class="button button-small button-balanced" ng-click="showPopup()" style="width: 85%; text-align: left; border-radius: 20px;margin-left: 10%">&ensp;&ensp;<i class="icon ion-android-favorite"></i>&ensp;&ensp;Rate this</button>
+      <button class="button button-small button-balanced" ng-click="openGallery()" style="width: 85%; text-align: left; border-radius: 20px;margin-left: 10%">&ensp;&ensp;<i class="icon ion-image"></i>&ensp;&ensp;Gallery</button>
     </div>
     <div class="col" style="padding-top: 0">
       <button class="button button-small button-balanced" ng-click="viewMap(attraction.id)" style="float: right; width: 85%; text-align: left; border-radius: 20px;margin-right: 10%;">&ensp;&ensp;<i class="icon ion-android-map"></i>&ensp;&ensp;Map</button>

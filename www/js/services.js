@@ -8,6 +8,7 @@ angular.module('ums.services', [])
         refATM = $firebase(ref.child('facility-atms')).$asArray();
         refBus = $firebase(ref.child('facility-bus')).$asArray();
         refCafe = $firebase(ref.child('facility-cafes')).$asArray();
+        refWashroom = $firebase(ref.child('facility-washrooms')).$asArray();
         refAdvertisements = $firebase(ref.child('advertisements')).$asArray();
         refGallery = $firebase(ref.child('gallery')).$asArray();
 
@@ -26,6 +27,9 @@ angular.module('ums.services', [])
         },
         refCafe: function() {
             return refCafe;
+        },
+        refWashroom: function() {
+            return refWashroom;
         },
         refAdvertisements: function() {
             return refAdvertisements;

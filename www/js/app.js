@@ -8,7 +8,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ionic.filter.bar', 'ums.services'])
+var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ionic.filter.bar', 'ums.services', 'ion-gallery'])
 
 .run(function($rootScope, $ionicPopup, $ionicPlatform, $ionicHistory) {
   $ionicPlatform.ready(function() {
@@ -100,6 +100,12 @@ var app = angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'jett.ion
       url:'/attraction/:attraction_id',
       templateUrl:'templates/single.html',
       controller: 'singleCtrl'
+    })
+
+    $stateProvider.state('gallery', {
+      url:'/gallery/:attraction_id',
+      templateUrl:'templates/gallery.html',
+      controller: 'galleryCtrl'
     })
 
     $stateProvider.state('facility', {

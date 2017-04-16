@@ -1,16 +1,10 @@
-app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocation, $cordovaLaunchNavigator, $compile, $ionicPopup, $timeout, $firebase) { 
+app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocation, $cordovaLaunchNavigator, $compile, $ionicPopup, $timeout, $firebase, $cordovaDevice) { 
 
     var firebaseRef = new Firebase("https://ums-eco-campus-a-1486986690367.firebaseio.com/"); 
     var att_ref = firebaseRef.child('attractions/' + $state.params.attraction_id);
 
     var data = getData.get($state.params.attraction_id);
     var options = {timeout: 10000, enableHighAccuracy: true};
-
-    var gallery = getData.refGallery();
-    $scope.gallery_img = gallery.filter(function (o) {
-
-      return o.attraction_id == $state.params.attraction_id; 
-    });
 
     $scope.showPopup = function() {
 
@@ -70,6 +64,7 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
         // rating_ref.push({rate: res});
        console.log('Tapped!', res);
        var ref = new Firebase("https://ums-eco-campus-a-1486986690367.firebaseio.com/");
+       // var uuid = $cordovaDevice.getUUID();
        var rating_ref = ref.child("ratings");
        rating_ref.push({rate: res, attraction_id: $state.params.attraction_id});
 
@@ -91,29 +86,7 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
         myPopup.close(); //close the popup after 3 seconds for some reason
      }, 30000);
   };
-    // $scope.slides = [ 
-    //    { 
-    //       "image":"img/Attraction/chancellery building/chancellery_1.jpg"
-    //    },
-    //    {
-    //       "image":"img/Attraction/chancellery building/chancellery_2.jpg"
-    //    },
-    //    {
-    //       "image":"img/Attraction/chancellery building/chancellery_3.jpg"
-    //    },
-    //    {
-    //       "image":"img/Attraction/chancellery building/chancellery_4.jpg"
-    //    },
-    //    {
-    //       "image":"img/Attraction/chancellery building/chancellery_5.jpg"
-    //    },
-    //    {
-    //       "image":"img/Attraction/chancellery building/ums_canselori.jpg"
-    //    }
-    // ];
-
-    
-
+   
     $scope.title = data.title;
     $scope.description = data.description;
     $scope.imageURL = data.imageURL;
@@ -215,6 +188,34 @@ app.controller("singleCtrl", function ($scope, getData, $state, $cordovaGeolocat
           long : data.longitude 
       }
   ];
+
+    $scope.openGallery = function(attraction_id){
+
+      $state.go('gallery', {
+          attraction_id: $state.params.attraction_id
+      });
+    }
+});
+
+
+
+
+app.controller("galleryCtrl", function ($scope, getData, $state, $firebase) { 
+
+  var gallery = getData.refGallery();
+
+  $scope.gallery_img = gallery.filter(function (o) {
+
+    return o.attraction_id == $state.params.attraction_id; 
+  });
+
+  $scope.images = new Array();
+
+  for (i = 0; i < $scope.gallery_img.length; i++){
+
+      $scope.images.push({"src": $scope.gallery_img[i].imageURL})
+  }         
+
 });
 
 

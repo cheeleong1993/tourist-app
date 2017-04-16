@@ -8,9 +8,9 @@ app.controller('facilityCtrl',function($scope, $state, $cordovaCamera){
   	$scope.goAttraction = function(){ 
 		$state.go('attraction');
 		}
-
-	$scope.goCamera = function () {
-      var options = {
+ 
+	$scope.goCamera = function () { 
+      var options = { 
         quality: 75,
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
@@ -51,7 +51,7 @@ app.controller('facilityCtrl',function($scope, $state, $cordovaCamera){
 
 
 
-app.controller('atmMapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera, getData) {
+app.controller('atmMapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera, getData, $cordovaLaunchNavigator, $compile) {
 
     var options = {timeout: 10000, enableHighAccuracy: true};
 
@@ -61,7 +61,8 @@ app.controller('atmMapCtrl', function($scope, $state, $cordovaGeolocation, $cord
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
    
       var latLng = new google.maps.LatLng(6.032509, 116.121645);
-   
+      var user_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
       var mapOptions = {
         center: latLng,
         zoom: 14,
@@ -69,7 +70,23 @@ app.controller('atmMapCtrl', function($scope, $state, $cordovaGeolocation, $cord
       };
    
       $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-   
+      
+      //create current location marker
+      var user_marker = new google.maps.Marker({
+          map: $scope.map,
+          icon: 'img/user_marker1.png',
+          animation: google.maps.Animation.DROP,
+          position: user_position
+        });      
+     
+      var myInfoWindow = new google.maps.InfoWindow({
+          content: "Here You Are!"
+        });
+
+      google.maps.event.addListener(user_marker, 'click', function () {
+          myInfoWindow.open($scope.map, user_marker);  
+        });
+
       $scope.markers = [];
 
       var infoWindow = new google.maps.InfoWindow();
@@ -84,7 +101,22 @@ app.controller('atmMapCtrl', function($scope, $state, $cordovaGeolocation, $cord
         });
         marker.content = '<div class="infoWindowContent"></div>';
         google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent('<p>' + marker.title + '</p>');
+
+            var contentString = "<div><button class='button button-clear button-positive' ng-click='navigate()'>"+marker.title+"</button></div>";
+            var compiled = $compile(contentString)($scope);
+
+            $scope.navigate= function(){ 
+              console.log(marker.position);
+              var dest = [info.latitude, info.longitude];
+                  $cordovaLaunchNavigator.navigate(dest).then(function () {
+                    // alert("Navigator launched");
+                  }, function (err) {
+                    //alert(err);
+                  });
+              //alert("Navigator launched");
+              }
+
+            infoWindow.setContent(compiled[0]);
             infoWindow.open($scope.map, marker);
         });
 
@@ -96,10 +128,10 @@ app.controller('atmMapCtrl', function($scope, $state, $cordovaGeolocation, $cord
           console.log(ATMs[i]);
       }
 
-      google.maps.event.addDomListener(marker, 'click', function () {
-          infoWindow.open($scope.map, marker);
+    //   google.maps.event.addDomListener(marker, 'click', function () {
+    //       infoWindow.open($scope.map, marker);
         
-    });
+    // });
     }, function(error){
       console.log("Could not get location");
     });
@@ -132,7 +164,7 @@ app.controller('atmMapCtrl', function($scope, $state, $cordovaGeolocation, $cord
   });
 
 
-app.controller('cafeMapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera, getData) {
+app.controller('cafeMapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera, getData, $cordovaLaunchNavigator, $compile) {
 
     var options = {timeout: 10000, enableHighAccuracy: true};
 
@@ -142,7 +174,8 @@ app.controller('cafeMapCtrl', function($scope, $state, $cordovaGeolocation, $cor
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
    
       var latLng = new google.maps.LatLng(6.032509, 116.121645);
-   
+      var user_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
       var mapOptions = {
         center: latLng,
         zoom: 14,
@@ -150,7 +183,23 @@ app.controller('cafeMapCtrl', function($scope, $state, $cordovaGeolocation, $cor
       };
    
       $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-   
+      
+      //create current location marker
+      var user_marker = new google.maps.Marker({
+          map: $scope.map,
+          icon: 'img/user_marker1.png',
+          animation: google.maps.Animation.DROP,
+          position: user_position
+        });      
+     
+      var myInfoWindow = new google.maps.InfoWindow({
+          content: "Here You Are!"
+        });
+
+      google.maps.event.addListener(user_marker, 'click', function () {
+          myInfoWindow.open($scope.map, user_marker);  
+        });
+
       $scope.markers = [];
 
       var infoWindow = new google.maps.InfoWindow();
@@ -165,7 +214,21 @@ app.controller('cafeMapCtrl', function($scope, $state, $cordovaGeolocation, $cor
         });
         marker.content = '<div class="infoWindowContent"></div>';
         google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent('<p>' + marker.title + '</p>');
+            
+            var contentString = "<div><button class='button button-clear button-positive' ng-click='navigate()'>"+marker.title+"</button></div>";
+            var compiled = $compile(contentString)($scope);
+
+            $scope.navigate= function(){ 
+              console.log(marker.position);
+              var dest = [info.latitude, info.longitude];
+                  $cordovaLaunchNavigator.navigate(dest).then(function () {
+                    // alert("Navigator launched");
+                  }, function (err) {
+                    //alert(err);
+                  });
+              //alert("Navigator launched");
+              }
+            infoWindow.setContent(compiled[0]); 
             infoWindow.open($scope.map, marker);
         });
 
@@ -177,10 +240,10 @@ app.controller('cafeMapCtrl', function($scope, $state, $cordovaGeolocation, $cor
           console.log(cafes[i]);
       }
 
-      google.maps.event.addDomListener(marker, 'click', function () {
-          infoWindow.open($scope.map, marker);
+    //   google.maps.event.addDomListener(marker, 'click', function () {
+    //       infoWindow.open($scope.map, marker);
         
-    });
+    // });
     }, function(error){
       console.log("Could not get location");
     });   
@@ -210,15 +273,17 @@ app.controller('cafeMapCtrl', function($scope, $state, $cordovaGeolocation, $cor
   });
 
 
-app.controller('toiletMapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera) {
+app.controller('toiletMapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera, $cordovaLaunchNavigator, $compile, getData) {
 
     var options = {timeout: 10000, enableHighAccuracy: true};
 
+    var washrooms = getData.refWashroom();
   
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
    
       var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-   
+      var user_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
       var mapOptions = {
         center: latLng,
         zoom: 14,
@@ -227,23 +292,21 @@ app.controller('toiletMapCtrl', function($scope, $state, $cordovaGeolocation, $c
    
       $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
    
-    //   //Wait until the map is loaded
-    //   google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-       
-    //   var marker = new google.maps.Marker({
-    //       map: $scope.map,
-    //       animation: google.maps.Animation.DROP,
-    //       position: latLng
-    //   });      
+      //create current location marker
+      var user_marker = new google.maps.Marker({
+          map: $scope.map,
+          icon: 'img/user_marker1.png',
+          animation: google.maps.Animation.DROP,
+          position: user_position
+        });      
      
-    //   var myInfoWindow = new google.maps.InfoWindow({
-    //       content: "Here You Are!"
-    //   });
+      var myInfoWindow = new google.maps.InfoWindow({
+          content: "Here You Are!"
+        });
 
-    //   google.maps.event.addListener(marker, 'click', function () {
-    //       myInfoWindow.open($scope.map, marker);  
-    //   });
-    // });
+      google.maps.event.addListener(user_marker, 'click', function () {
+          myInfoWindow.open($scope.map, user_marker);  
+        });
 
       $scope.markers = [];
 
@@ -251,73 +314,42 @@ app.controller('toiletMapCtrl', function($scope, $state, $cordovaGeolocation, $c
 
       var createMarker = function (info){
         var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(info.lat, info.long),
+            position: new google.maps.LatLng(info.latitude, info.longitude),
             map: $scope.map,
             icon: 'img/toilets.png',
             animation: google.maps.Animation.DROP,
-            title: info.city,
+            title: info.name,
         });
         marker.content = '<div class="infoWindowContent"></div>';
         google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent('<p>' + marker.title + '</p>');
+
+            var contentString = "<div><button class='button button-clear button-positive' ng-click='navigate()'>"+marker.title+"</button></div>";
+            var compiled = $compile(contentString)($scope);
+
+            $scope.navigate= function(){ 
+              console.log(marker.position);
+              var dest = [info.latitude, info.longitude];
+                  $cordovaLaunchNavigator.navigate(dest).then(function () {
+                    // alert("Navigator launched");
+                  }, function (err) {
+                    //alert(err);
+                  });
+              //alert("Navigator launched");
+              }
+            infoWindow.setContent(compiled[0]); 
             infoWindow.open($scope.map, marker);
         });
 
         $scope.markers.push(marker);
       }  
 
-      for (i = 0; i < cities.length; i++){
-          createMarker(cities[i]);
+      for (i = 0; i < washrooms.length; i++){
+          createMarker(washrooms[i]);
       }
 
-    //   google.maps.event.addDomListener(marker, 'click', function () {
-    //       infoWindow.open($scope.map, marker);
-        
-    // });
     }, function(error){
       console.log("Could not get location");
     });
-
-    var cities = [
-    {
-        city : 'UMS Library Rest Room',
-        desc : 'Test',
-        lat : 6.034366,
-        long : 116.117677 
-    },{
-        city : 'UMS Dewan Canselor Rest Room',
-        desc : 'Test',
-        lat : 6.036378,
-        long : 116.118590
-    },{
-        city : 'UMS Aquarium and Marine Museum Rest Room',
-        desc : 'Test',
-        lat : 6.039827,
-        long : 116.112754
-    },{
-        city : 'UMS Biotechnology Research Institute Rest Room',
-        desc : 'Test',
-        lat : 6.037297,
-        long : 116.113357
-    },{
-        city : 'Faculty of Science and Natural Resources Rest Room',
-        desc : 'Test',
-        lat : 6.032800,
-        long : 116.120689
-    },{
-        city : 'Faculty of Psychology and Education Rest Room',
-        desc : 'Test',
-        lat : 6.029732,
-        long : 116.119016
-    },
-    {
-        city : 'Fakulti Perniagaan, Ekonomi dan Perakaunan Rest Room',
-        desc : 'Test',
-        lat : 6.032767,
-        long : 116.112735 
-    }
-];
-    
 
     $scope.goCamera = function () {
       var options = {
@@ -345,7 +377,7 @@ app.controller('toiletMapCtrl', function($scope, $state, $cordovaGeolocation, $c
 
 
 
-app.controller('busStopMapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera, getData) {
+app.controller('busStopMapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera, getData, $cordovaLaunchNavigator, $compile) {
 
     var options = {timeout: 10000, enableHighAccuracy: true};
 
@@ -355,7 +387,8 @@ app.controller('busStopMapCtrl', function($scope, $state, $cordovaGeolocation, $
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
    
       var latLng = new google.maps.LatLng(6.032509, 116.121645);
-   
+      var user_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
       var mapOptions = {
         center: latLng,
         zoom: 14,
@@ -363,7 +396,23 @@ app.controller('busStopMapCtrl', function($scope, $state, $cordovaGeolocation, $
       };
    
       $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-   
+      
+      //create current location marker
+      var user_marker = new google.maps.Marker({
+          map: $scope.map,
+          icon: 'img/user_marker1.png',
+          animation: google.maps.Animation.DROP,
+          position: user_position
+        });      
+     
+      var myInfoWindow = new google.maps.InfoWindow({
+          content: "Here You Are!"
+        });
+
+      google.maps.event.addListener(user_marker, 'click', function () {
+          myInfoWindow.open($scope.map, user_marker);  
+        });
+        
       $scope.markers = [];
 
       var infoWindow = new google.maps.InfoWindow();
@@ -378,7 +427,21 @@ app.controller('busStopMapCtrl', function($scope, $state, $cordovaGeolocation, $
         });
         marker.content = '<div class="infoWindowContent"></div>';
         google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent('<p>' + marker.title + '</p>');
+            var contentString = "<div><button class='button button-clear button-positive' ng-click='navigate()'>"+marker.title+"</button></div>";
+            var compiled = $compile(contentString)($scope);
+
+            $scope.navigate= function(){ 
+              console.log(marker.position);
+              var dest = [info.latitude, info.longitude];
+                  $cordovaLaunchNavigator.navigate(dest).then(function () {
+                    // alert("Navigator launched");
+                  }, function (err) {
+                    //alert(err);
+                  });
+              //alert("Navigator launched");
+              }
+
+            infoWindow.setContent(compiled[0]); 
             infoWindow.open($scope.map, marker);
         });
 
@@ -390,10 +453,10 @@ app.controller('busStopMapCtrl', function($scope, $state, $cordovaGeolocation, $
           console.log(bus[i]);
       }
 
-      google.maps.event.addDomListener(marker, 'click', function () {
-          infoWindow.open($scope.map, marker);
+    //   google.maps.event.addDomListener(marker, 'click', function () {
+    //       infoWindow.open($scope.map, marker);
         
-    });
+    // });
     }, function(error){
       console.log("Could not get location");
     });

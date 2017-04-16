@@ -1,7 +1,7 @@
 app.controller('mapCtrl', function($scope, $state, $cordovaGeolocation, $cordovaCamera, $cordovaLaunchNavigator, $compile, getData) { 
 
     var options = {timeout: 10000, enableHighAccuracy: true};
-    var attractions = getData.refAttractions(); 
+    var attractions = getData.refAttractions();  
 
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
    
@@ -53,10 +53,7 @@ app.controller('mapCtrl', function($scope, $state, $cordovaGeolocation, $cordova
               $scope.navigate= function(){ 
                 console.log(marker.position);
                 var dest = [info.latitude, info.longitude];
-                    $cordovaLaunchNavigator.navigate(dest, {
-                      start: null,
-                      enableDebug: true
-                    }).then(function () {
+                    $cordovaLaunchNavigator.navigate(dest).then(function () {
                       // alert("Navigator launched");
                     }, function (err) {
                       //alert(err);
