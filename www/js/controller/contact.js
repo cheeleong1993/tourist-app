@@ -20,7 +20,7 @@ app.controller('contactCtrl', function($scope, $state, $cordovaGeolocation, $cor
    
       $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-      //create current location marker
+      //create current location marker 
       var user_marker = new google.maps.Marker({
           map: $scope.map,
           icon: 'img/user_marker1.png',

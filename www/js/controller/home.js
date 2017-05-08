@@ -1,7 +1,24 @@
 /**
  * Created by Gabeta on 24/07/2016. 
  */  
-app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, getData, $cordovaLocalNotification, $interval, $cordovaGeolocation){ 
+app.controller('homeCtrl',function($scope, $state, $cordovaCamera, $ionicPopup, getData, $cordovaLocalNotification, $interval, $cordovaGeolocation, $cordovaFile){ 
+	// $scope.qwe = "img/ad_2.png";
+
+	// 	alert("strat");
+ //      var name = $scope.qwe.substr($scope.qwe.lastIndexOf('/') + 1);
+ //      console.log(name);
+ //      var namePath = $scope.qwe.substr(0, $scope.qwe.lastIndexOf('/') + 1);
+ //      console.log(namePath);
+
+ //      $cordovaFile.copyFile(namePath, name, cordova.file.dataDirectory,name)
+ //            .then(function(success) {
+ //                alert("success");
+ //                $scope.fileName = cordova.file.dataDirectory + name;
+ //                alert("success 2nd");
+ //            }, function(error) {
+ //              alert("failed");
+ //            });
+
 
 	// context awareness - check location in interval 10 minutes
 	$scope.nearby_att = 'lo';

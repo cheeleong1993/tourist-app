@@ -16,7 +16,7 @@
 
     <div class="row responsive-sm" ng-repeat="attraction in attractions">
 
-      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average == undefined">
+      <div class="col" style="position: relative;" ng-if="attraction.rate_average == undefined">
         <a ng-click="openAttraction(attraction.id)" >
           <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
             <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
@@ -30,7 +30,7 @@
         </a>
       </div>
 
-      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average > 0 &&  attraction.rate_average < 1.5">
+      <div class="col" style="position: relative;" ng-if="attraction.rate_average > 0 &&  attraction.rate_average < 1.5">
         <a ng-click="openAttraction(attraction.id)" >
           <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
             <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
@@ -44,7 +44,7 @@
         </a>
       </div>
 
-      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average >= 1.5 && attraction.rate_average < 2.5">
+      <div class="col" style="position: relative;" ng-if="attraction.rate_average >= 1.5 && attraction.rate_average < 2.5">
         <a ng-click="openAttraction(attraction.id)" >
           <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
             <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
@@ -58,7 +58,7 @@
         </a>
       </div>
 
-      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average >= 2.5 && attraction.rate_average < 3.5">
+      <div class="col" style="position: relative;" ng-if="attraction.rate_average >= 2.5 && attraction.rate_average < 3.5">
         <a ng-click="openAttraction(attraction.id)" >
           <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
             <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
@@ -72,7 +72,7 @@
         </a>
       </div>
 
-      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average >= 3.5 && attraction.rate_average < 4.5">
+      <div class="col" style="position: relative;" ng-if="attraction.rate_average >= 3.5 && attraction.rate_average < 4.5">
         <a ng-click="openAttraction(attraction.id)" >
           <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
             <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
@@ -86,7 +86,7 @@
         </a>
       </div>
 
-      <div class="wrapper" style="position: relative;" ng-if="attraction.rate_average >= 4.5">
+      <div class="col" style="position: relative;" ng-if="attraction.rate_average >= 4.5">
         <a ng-click="openAttraction(attraction.id)" >
           <img src="{{attraction.imageURL}}" class="slide-data-img" alt=""/>
             <p style="bottom: 0%;color: white;font-size: 15px;left: 0;padding-left: 5px;position: absolute; background-color: black;opacity: 0.6; width: 100%"><b>{{attraction.title}}</b><br>
@@ -109,3 +109,4 @@
     </div>
   </ion-content>
 </ion-view>
+<!-- class wrapper->col -->

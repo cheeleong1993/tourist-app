@@ -48,21 +48,6 @@ app.controller('attractionCtrl',function($scope, $state, $cordovaCamera, $fireba
         });
     }
     
- //  $scope.goMap = function(){
-	// $state.go('map');
-	// }
-
- //  $scope.goAttraction = function(){
-	// $state.go('attraction');
-	// }
-
-	
-
- //  $scope.goSingle = function(){
-
-	// $state.go('single');
-
-	// }
 
 	// $scope.attractions = [ 
 	//      {
